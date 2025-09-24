@@ -1,22 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { Text, View } from "react-native";
 
-const Index = () => {
+export default function Index() {
   return (
-    <SafeAreaView>
-      <Text style={styles.title}>Outfique App</Text>
-    </SafeAreaView>
-  )
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Text>Edit app/index.tsx to edit this screen.</Text>
+    </View>
+  );
 }
-
-export default Index
-
-const styles = StyleSheet.create({
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginVertical: 20,
-    },
-})
