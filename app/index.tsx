@@ -1,24 +1,23 @@
-import { Button } from "@/components/ui/button";
-import { Text } from "@/components/ui/text";
-import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from 'expo-router';
+import React, { useEffect } from 'react';
+import { Image, View } from 'react-native';
 
-export default function Index() {
+const Index = () => {
+  const router = useRouter();
+  useEffect(() => {
+    setTimeout(() => {
+      router.replace('/(auth)/welcome')
+    }, 2000)
+  },)
   return (
-    <SafeAreaView className="flex-1 bg-background">
-      <View className="flex-1 justify-center items-center p-6">
-        <View className="items-center">
-          <Text variant="h1" className="mb-2 text-8xl text-center">
-            Welcome to Outfique
-          </Text>
-          <Text variant="lead" className="text-center mb-8 text-2xl">
-            Your daily outfit inspiration.
-          </Text>
-        </View>
-        <Button className="bg-black px-5 py-3 rounded-lg" size="lg" onPress={() => alert("Let's go!")}>
-          <Text className="text-white text-xl font-semibold">Get Started</Text>
-        </Button>
-      </View>
-    </SafeAreaView>
-  );
+    <View className='flex-1 items-center justify-center bg-dark-1'>
+      <Image
+        source={require('@/assets/splashScreen.png')}
+        resizeMode='contain'
+        className='w-1/2 h-full'
+      />
+    </View>
+  )
 }
+
+export default Index
