@@ -10,11 +10,11 @@ const Index = () => {
     }, 2000)
   },)
   return (
-    <View className='flex-1 items-center justify-center bg-dark-1'>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#0A0E27' }}>
       <Image
         source={require('@/assets/splashScreen.png')}
         resizeMode='contain'
-        className='w-1/2 h-full'
+        style={{ width: '50%', height: '100%' }}
       />
     </View>
   )
