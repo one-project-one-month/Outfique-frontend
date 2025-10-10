@@ -1,9 +1,14 @@
-import React, { useEffect } from 'react';
-import { Dimensions, Image, ImageBackground, Platform, StatusBar, ViewStyle } from 'react-native';
+import { ImageBackground } from 'expo-image';
+import React from 'react';
+import { Dimensions, Platform, StatusBar, ViewStyle } from 'react-native';
 
 interface ScreenWrapperProps {
   style?: ViewStyle;
   children: React.ReactNode;
+}
+
+export interface ScreenWrapperRef {
+  reloadImage: () => void;
 }
 
 const { height } = Dimensions.get('window');
@@ -11,13 +16,7 @@ const { height } = Dimensions.get('window');
 const backgroundImage = require('@/assets/bg.png');
 
 const ScreenWrapper = ({ style, children }: ScreenWrapperProps) => {
-  let paddingTop = Platform.OS === 'ios' ? height * 0.05 : height;
-
-  useEffect(() => {
-    // Preload the image
-    Image.prefetch(Image.resolveAssetSource(backgroundImage).uri)
-      .catch(err => console.log(err));
-  }, []);
+  let paddingTop = Platform.OS === 'ios' ? height * 0.05 : 50;
 
   return (
     <ImageBackground
@@ -29,7 +28,8 @@ const ScreenWrapper = ({ style, children }: ScreenWrapperProps) => {
         },
         style
       ]}
-      resizeMode="cover"
+      contentFit="cover"
+      cachePolicy={"memory-disk"}
     >
       <StatusBar barStyle={'light-content'} />
       {children}
