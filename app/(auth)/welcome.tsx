@@ -1,5 +1,5 @@
 import { Button } from '@/components/Button';
-import GlobalButton from '@/components/GlassButton';
+import GlassButton from '@/components/GlassButton';
 import ScreenWrapper from '@/components/ScreenWrapper';
 import { colors } from '@/constants/theme';
 import { router } from 'expo-router';
@@ -38,7 +38,7 @@ const Welcome = () => {
             Sign In
           </Button>
 
-          <GlobalButton
+          <GlassButton
             size="medium"
             onPress={() => router.push('/(auth)/register')}
             glassProps={{
@@ -47,7 +47,7 @@ const Welcome = () => {
             textStyle={{ color: colors.uranianBlue }}
           >
             Sign Up
-          </GlobalButton>
+          </GlassButton>
         </Animated.View>
       </View>
     </ScreenWrapper>
