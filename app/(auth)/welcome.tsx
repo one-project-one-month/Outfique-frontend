@@ -3,8 +3,7 @@ import GlobalButton from '@/components/GlassButton';
 import ScreenWrapper from '@/components/ScreenWrapper';
 import { colors } from '@/constants/theme';
 import { router } from 'expo-router';
-import React from 'react';
-import { View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 
 const Welcome = () => {
@@ -25,6 +24,9 @@ const Welcome = () => {
           >
             to the world of Outfique &lt;3
           </Animated.Text>
+          <Pressable onPress={() => router.push('/(closet)/Home')}>
+            <Text style={{ color: 'white', fontSize: 20 }}>Closet</Text>
+          </Pressable>
         </View>
 
         <Animated.View
