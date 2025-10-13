@@ -3,11 +3,16 @@ import GlassButton from '@/components/GlassButton';
 import GlassInput from '@/components/GlassInput';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
-import { StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import React from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import Tooltip from 'react-native-walkthrough-tooltip';
 import Tabs from '../(tabs)';
 import Category from './factor/Category';
 
 const Home = () => {
+    const [active, setActive] = React.useState(false);
+    const router = useRouter();
     return (
         <Tabs>
             {/* Back Button */}
@@ -36,7 +41,7 @@ const Home = () => {
                         }}
                         buttonStyle={{ borderRadius: 10, marginLeft: 10 }}
                     >
-                        <AntDesign name="unordered-list" size={27} color="#a0ddff" />
+                        <Image style={{ width: 27, height: 27, tintColor: '#a0ddff' }} source={require('../../assets/filter.png')} />
                     </GlassButton>
 
                 </View>
@@ -52,11 +57,37 @@ const Home = () => {
                     </Text>
                 </View>
 
-                <View style={{ alignItems: 'center',marginBottom: 40, }}>
-                    <View style={styles.addButton}>
-                        <AntDesign name="plus" size={30} color="#a0ddff" />
-                    </View>
+                {/* Add Button with Tooltip */}
+                <View style={{ alignItems: 'center', marginBottom: 40 }}>
+                    <Pressable
+                        onPress={() => {
+                            setActive(true);
+                            setTimeout(() => {
+                                router.push('/(closet)/Camera');
+                                setActive(false);
+                            }, 500);
+                        }}
+                        style={[
+                            styles.addButton,
+                            { backgroundColor: active ? '#a0ddff' : '#0A122A' }
+                        ]}
+                    >
+                        <Tooltip
+                            isVisible={active}  
+                            contentStyle={styles.tooltipContent}
+                            placement='top'
+                            backgroundColor='transparent'
+                            arrowSize={{ width: 20, height: 15 }}
+                            showChildInTooltip
+                            childContentSpacing={35}
+                            content={<Text style={styles.tooltipText}>Create your outfit</Text>}
+                        >
+                            <AntDesign name="plus" size={30} color={active ? '#0A122A' : '#a0ddff'} />
+                        </Tooltip>
+                    </Pressable>
+
                 </View>
+
 
             </View>
         </Tabs>
@@ -77,16 +108,29 @@ const styles = StyleSheet.create({
     addButton: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: "#0A122A",
         borderWidth: 1,
         borderColor: 'rgba(255, 255, 255, 0.3)',
         borderRadius: 50,
         width: 80,
         height: 80,
         shadowColor: 'white',
-        shadowOpacity: 0.9,
+        shadowOpacity: 0.6,
         shadowOffset: { width: 0, height: 1 },
         shadowRadius: 4,
-        elevation: 9,
-    }
+        elevation: 6,
+    },
+    tooltipContent: {
+        flex: 1,
+        backgroundColor: 'rgba(10, 18, 42, 0.8)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        borderRadius: 8,
+
+    },
+    tooltipText: {
+        color: '#a0ddff',
+        fontSize: 16,
+        fontWeight: '600',
+    },
 })
