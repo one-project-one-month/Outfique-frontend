@@ -58,39 +58,36 @@ const Home = () => {
                 </View>
 
                 {/* Add Button with Tooltip */}
-                <View style={{ alignItems: 'center', marginBottom: 40 }}>
-                    <Pressable
-                        onPress={() => {
-                            setActive(true);
-                            setTimeout(() => {
-                                router.push('/(closet)/Camera');
-                                setActive(false);
-                            }, 500);
-                        }}
-                        style={[
-                            styles.addButton,
-                            { backgroundColor: active ? '#a0ddff' : '#0A122A' }
-                        ]}
+                <View style={{ alignItems: 'center' }}>
+                    <Tooltip
+                        isVisible={active}
+                        contentStyle={styles.tooltipContent}
+                        placement='top'
+                        backgroundColor='transparent'
+                        arrowSize={{ width: 20, height: 15 }}
+                        childContentSpacing={45}
+                        showChildInTooltip={false}
+                        content={<Text style={styles.tooltipText}>Create your outfit</Text>}
+                        onClose={() => setActive(false)}
                     >
-                        <Tooltip
-                            isVisible={active}  
-                            contentStyle={styles.tooltipContent}
-                            placement='top'
-                            backgroundColor='transparent'
-                            arrowSize={{ width: 20, height: 15 }}
-                            showChildInTooltip
-                            childContentSpacing={35}
-                            content={<Text style={styles.tooltipText}>Create your outfit</Text>}
+                        <Pressable
+                            onPress={() => {
+                                setActive(true);
+                                setTimeout(() => {
+                                    setActive(false);
+                                    router.push('/(closet)/Camera');
+                                }, 500);
+                            }}
+                            onLongPress={() => setActive(true)}
+                            delayLongPress={150}
+                            style={[styles.addButton, { backgroundColor: active ? '#a0ddff' : '#0A122A' }]}
                         >
                             <AntDesign name="plus" size={30} color={active ? '#0A122A' : '#a0ddff'} />
-                        </Tooltip>
-                    </Pressable>
-
+                        </Pressable>
+                    </Tooltip>
                 </View>
-
-
             </View>
-        </Tabs>
+        </Tabs >
 
     );
 };
@@ -118,6 +115,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 1 },
         shadowRadius: 4,
         elevation: 6,
+
     },
     tooltipContent: {
         flex: 1,
