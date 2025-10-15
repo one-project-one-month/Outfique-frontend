@@ -7,7 +7,7 @@ export default function RootLayout() {
   return (
     // Provide the react-query client to your App
     <QueryClientProvider client={queryClient}>
-      <Stack screenOptions={{ headerShown: false }} />;
+      <Stack screenOptions={{ headerShown: false, fullScreenGestureEnabled: true }} />
     </QueryClientProvider>
   );
 }

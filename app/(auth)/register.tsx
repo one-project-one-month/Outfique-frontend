@@ -3,16 +3,21 @@ import GlassButton from '@/components/GlassButton';
 import GlassInput from '@/components/GlassInput';
 import ScreenWrapper from '@/components/ScreenWrapper';
 import { colors } from '@/constants/theme';
-import { isIos } from '@/lib/utils';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useHeaderHeight } from '@react-navigation/elements';
 import { useRouter } from 'expo-router';
 import { CheckCircleIcon, CircleIcon } from 'phosphor-react-native';
 import React from 'react';
 import { Controller, useForm } from "react-hook-form";
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const SignUp = () => {
   const router = useRouter();
+  const headerHeight = useHeaderHeight();
+  const keyboardVerticalOffset =
+    Platform.OS === 'ios'
+      ? headerHeight
+      : headerHeight + (StatusBar.currentHeight ?? 0);
 
 
   const { control, handleSubmit, formState: { errors }, getValues } = useForm({
@@ -37,127 +42,131 @@ const SignUp = () => {
     <ScreenWrapper>
 
       {/* Back Button  */}
-      {isIos && <BackButton />}
+      <BackButton />
 
       {/* Main Container */}
       <View style={styles.container}>
-        <View style={{ marginTop: 40, gap: 10 }}>
-          <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold', alignSelf: 'flex-start' }}>
-            Create your account!
-          </Text>
-          <Text style={{ color: '#A8A9AD', fontSize: 16, alignSelf: 'flex-start' }}>
-            Create your account and let’s dress your day
-          </Text>
-        </View>
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={{ flex: 1 }}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+          keyboardVerticalOffset={keyboardVerticalOffset}
         >
           <ScrollView
             contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
           >
-            <View style={styles.formContainer}>
-              {/* Name Input */}
-              <Controller
-                control={control}
-                name="name"
-                rules={{ required: 'Name is required' }}
-                render={({ field: { onChange, value } }) => (
-                  <GlassInput
-                    placeholder="Full Name"
-                    value={value}
-                    onChangeText={onChange}
-                    size="small"
-                    glassProps={{ glassEffectStyle: 'clear' }}
-                    inputStyle={{ marginTop: 10 }}
-                  />
-                )}
-              />
-              {errors.name && <Text style={styles.errorText}>{errors.name.message}</Text>}
+            <View>
+              <View style={{ marginTop: 40, gap: 10 }}>
+                <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold', alignSelf: 'flex-start' }}>
+                  Create your account!
+                </Text>
+                <Text style={{ color: '#A8A9AD', fontSize: 16, alignSelf: 'flex-start' }}>
+                  Create your account and let’s dress your day
+                </Text>
+              </View>
 
-              {/* Email Input */}
-              <Controller
-                control={control}
-                name="email"
-                rules={{
-                  required: 'Email is required',
-                }}
-                render={({ field: { onChange, value } }) => (
-                  <GlassInput
-                    placeholder="Email"
-                    value={value}
-                    onChangeText={onChange}
-                    keyboardType="email-address"
-                    size="small"
-                    glassProps={{ glassEffectStyle: 'clear' }}
-                    inputStyle={{ marginTop: 10 }}
-                  />
-                )}
-              />
-              {errors.email && <Text style={styles.errorText}>{errors.email.message}</Text>}
+              <View style={styles.formContainer}>
+                {/* Name Input */}
+                <Controller
+                  control={control}
+                  name="name"
+                  rules={{ required: 'Name is required' }}
+                  render={({ field: { onChange, value } }) => (
+                    <GlassInput
+                      placeholder="Full Name"
+                      value={value}
+                      onChangeText={onChange}
+                      size="small"
+                      error={!!errors.name}
+                      glassProps={{ glassEffectStyle: 'clear' }}
+                      inputStyle={{ marginTop: 10 }}
+                    />
+                  )}
+                />
+                {errors.name && <Text style={styles.errorText}>{errors.name.message}</Text>}
 
-              {/* Password Input */}
-              <Controller
-                control={control}
-                name="password"
-                rules={{
-                  required: 'Password is required',
-                  minLength: { value: 6, message: 'Password must be at least 6 characters' }
-                }}
-                render={({ field: { onChange, value } }) => (
-                  <GlassInput
-                    placeholder="Password"
-                    value={value}
-                    onChangeText={onChange}
-                    isPassword={true}
-                    size="small"
-                    glassProps={{ glassEffectStyle: 'clear' }}
-                    inputStyle={{ marginTop: 10 }}
-                  />
-                )}
-              />
-              {errors.password && <Text style={styles.errorText}>{errors.password.message}</Text>}
+                {/* Email Input */}
+                <Controller
+                  control={control}
+                  name="email"
+                  rules={{
+                    required: 'Email is required',
+                  }}
+                  render={({ field: { onChange, value } }) => (
+                    <GlassInput
+                      placeholder="Email"
+                      value={value}
+                      onChangeText={onChange}
+                      keyboardType="email-address"
+                      size="small"
+                      glassProps={{ glassEffectStyle: 'clear' }}
+                      inputStyle={{ marginTop: 10 }}
+                    />
+                  )}
+                />
+                {errors.email && <Text style={styles.errorText}>{errors.email.message}</Text>}
 
-              {/* Confirm Password Input */}
-              <Controller
-                control={control}
-                name="confirmPassword"
-                rules={{
-                  required: 'Please confirm your password',
-                  validate: value =>
-                    value === getValues('password') || 'Passwords do not match'
-                }}
-                render={({ field: { onChange, value } }) => (
-                  <GlassInput
-                    placeholder="Confirm Password"
-                    value={value}
-                    onChangeText={onChange}
-                    isPassword={true}
-                    size="small"
-                    glassProps={{ glassEffectStyle: 'clear' }}
-                    inputStyle={{ marginTop: 10 }}
-                  />
-                )}
-              />
-              {errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword.message}</Text>}
+                {/* Password Input */}
+                <Controller
+                  control={control}
+                  name="password"
+                  rules={{
+                    required: 'Password is required',
+                    minLength: { value: 6, message: 'Password must be at least 6 characters' }
+                  }}
+                  render={({ field: { onChange, value } }) => (
+                    <GlassInput
+                      placeholder="Password"
+                      value={value}
+                      onChangeText={onChange}
+                      isPassword={true}
+                      size="small"
+                      glassProps={{ glassEffectStyle: 'clear' }}
+                      inputStyle={{ marginTop: 10 }}
+                    />
+                  )}
+                />
+                {errors.password && <Text style={styles.errorText}>{errors.password.message}</Text>}
 
-              {/* Remember Me Checkbox */}
-              <Controller
-                control={control}
-                name="rememberMe"
-                render={({ field: { onChange, value } }) => (
-                  <TouchableOpacity
-                    onPress={() => onChange(!value)}
-                    style={styles.checkboxContainer}
-                  >
-                    {value ? <CheckCircleIcon style={{ borderRadius: 4 }} color="#A8A9AD" weight="fill" /> : <CircleIcon color={colors.moonlightGray} />}
-                    <Text style={styles.checkboxLabel}>Remember me</Text>
-                  </TouchableOpacity>
-                )}
-              />
+                {/* Confirm Password Input */}
+                <Controller
+                  control={control}
+                  name="confirmPassword"
+                  rules={{
+                    required: 'Please confirm your password',
+                    validate: value =>
+                      value === getValues('password') || 'Passwords do not match'
+                  }}
+                  render={({ field: { onChange, value } }) => (
+                    <GlassInput
+                      placeholder="Confirm Password"
+                      value={value}
+                      onChangeText={onChange}
+                      isPassword={true}
+                      size="small"
+                      glassProps={{ glassEffectStyle: 'clear' }}
+                      inputStyle={{ marginTop: 10 }}
+                    />
+                  )}
+                />
+                {errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword.message}</Text>}
+
+                {/* Remember Me Checkbox */}
+                <Controller
+                  control={control}
+                  name="rememberMe"
+                  render={({ field: { onChange, value } }) => (
+                    <TouchableOpacity
+                      onPress={() => onChange(!value)}
+                      style={styles.checkboxContainer}
+                    >
+                      {value ? <CheckCircleIcon style={{ borderRadius: 4 }} color="#A8A9AD" weight="fill" /> : <CircleIcon color={colors.moonlightGray} />}
+                      <Text style={styles.checkboxLabel}>Remember me</Text>
+                    </TouchableOpacity>
+                  )}
+                />
+              </View>
             </View>
 
             {/* Footer */}
@@ -236,7 +245,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   formContainer: {
-    paddingTop: 20,
     marginTop: 40,
   },
   input: {
@@ -248,13 +256,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     color: colors.white,
-    fontSize: 16
   },
   glassInput: {
     borderRadius: 25,
     padding: 1,
     marginTop: 10,
-    width: '100%'
+    width: '100%',
+    borderCurve: "continuous"
   },
   glassButton: {
     height: 44,
@@ -267,7 +275,7 @@ const styles = StyleSheet.create({
   },
 
   errorText: {
-    color: 'yellow',
+    color: colors.red.light2,
     marginLeft: 15,
     marginTop: 5,
     fontSize: 12

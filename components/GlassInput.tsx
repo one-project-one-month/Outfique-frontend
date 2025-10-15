@@ -14,6 +14,7 @@ interface GlassInputProps extends TextInputProps {
   };
   isPassword?: boolean;
   showPasswordToggle?: boolean;
+  error?: boolean;
 }
 
 const GlassInput: React.FC<GlassInputProps> = ({
@@ -24,6 +25,7 @@ const GlassInput: React.FC<GlassInputProps> = ({
   isPassword = false,
   showPasswordToggle = true,
   secureTextEntry,
+  error = false,
   ...textInputProps
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -53,7 +55,7 @@ const GlassInput: React.FC<GlassInputProps> = ({
     const inputStyles: ViewStyle = {
       backgroundColor: 'rgba(255, 255, 255, 0.1)',
       borderWidth: 1,
-      borderColor: 'rgba(255, 255, 255, 0.3)'
+      borderColor: error ? '#FF5C5C' : 'rgba(255, 255, 255, 0.3)',
     };
 
     return {
