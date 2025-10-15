@@ -4,6 +4,7 @@ import ScreenWrapper from "@/components/ScreenWrapper";
 import StarSlider from "@/components/StarSlider";
 import { colors } from "@/constants/theme";
 import { isIos } from "@/lib/utils";
+import { useRouter } from "expo-router";
 import React from "react";
 import {
   KeyboardAvoidingView,
@@ -15,6 +16,8 @@ import {
 } from "react-native";
 
 const Page1 = () => {
+  const router = useRouter();
+
   return (
     <ScreenWrapper>
       <View style={styles.topBar}>
@@ -42,7 +45,7 @@ const Page1 = () => {
 
         <View style={styles.footerButton}>
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => router.push("/(onboarding)/page2")}
             style={styles.continueButton}
             activeOpacity={0.8}
           >
@@ -82,7 +85,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "white",
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: "600",
   },
   subtitle: {

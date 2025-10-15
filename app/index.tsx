@@ -6,7 +6,7 @@ const Index = () => {
   const router = useRouter();
   useEffect(() => {
     setTimeout(() => {
-      router.replace("/(onboarding)/page1");
+      router.replace("/(auth)/welcome");
     }, 2000);
   });
   return (

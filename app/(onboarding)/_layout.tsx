@@ -3,7 +3,9 @@ import React from "react";
 
 const OnboardingLayout = () => {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    <Stack
+      screenOptions={{ headerShown: false, fullScreenGestureEnabled: true }}
+    >
       <Stack.Screen name="index" />
       <Stack.Screen name="page1" />
       <Stack.Screen name="page2" />

@@ -1,59 +1,48 @@
 import BackButton from "@/components/BackButton";
-import CustomDatePicker from "@/components/CustomDatePicker";
+import WeightPicker from "@/components/CustomWeightPicker";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import StarSlider from "@/components/StarSlider";
 import { colors } from "@/constants/theme";
 import { isIos } from "@/lib/utils";
-import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React from "react";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const Page2 = () => {
+const Page4 = () => {
   const router = useRouter();
 
   return (
     <ScreenWrapper>
       <View style={styles.topBar}>
         {isIos && <BackButton />}
-        <StarSlider initialPosition={0.2} />
+        <StarSlider initialPosition={0.4} />
       </View>
 
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
-      >
-        <View style={styles.contentContainer}>
-          <View style={styles.textContainer}>
-            <Text style={styles.title}>When's your birthday?</Text>
-          </View>
+      <View style={styles.contentContainer}>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>And your weight?</Text>
+          <Text style={styles.subtitle}>
+            This helps us finding the most flattering styles for you!
+          </Text>
         </View>
-        {/* date picker */}
-        <CustomDatePicker />
+      </View>
 
-        <View style={styles.footerButton}>
-          <TouchableOpacity
-            onPress={() => router.push("/(onboarding)/page3")}
-            style={styles.continueButton}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.buttonText}>Continue</Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
+      <WeightPicker />
+
+      <View style={styles.footerButton}>
+        <TouchableOpacity
+          onPress={() => router.push("/(onboarding)/page1")}
+          style={styles.continueButton}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.buttonText}>Continue</Text>
+        </TouchableOpacity>
+      </View>
     </ScreenWrapper>
   );
 };
 
-export default Page2;
+export default Page4;
 
 const styles = StyleSheet.create({
   topBar: {
@@ -84,6 +73,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "600",
   },
+  subtitle: {
+    color: colors.uranianBlue,
+    fontSize: 16,
+    fontWeight: "400",
+  },
   footerButton: {
     width: "100%",
     paddingHorizontal: 20,
@@ -102,5 +96,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
   },
-
 });
