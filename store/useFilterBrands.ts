@@ -36,7 +36,6 @@ export const useFilterBrandsForFemale = create<FilterBrandStateForFemale>((set) 
   toggleBrand: (brand) => set((state) => {
     const current = state.selectedBrands;
     
-    // --- Special 'All' Logic ---
     if (brand === 'All') {
       return { selectedBrands: current.includes('All') ? [] : ['All'] };
     }
@@ -49,7 +48,6 @@ export const useFilterBrandsForFemale = create<FilterBrandStateForFemale>((set) 
       newSelection = [...newSelection, brand];
     }
     
-    // If all other brands are deselected, revert to selecting 'All'
     if (newSelection.length === 0) {
       newSelection = ['All'];
     }
@@ -94,12 +92,11 @@ interface FilterBrandStateForMale {
 
 export const useFilterBrandsForMale = create<FilterBrandStateForMale>((set) => ({
   brands: BRANDSFORMALE,
-  selectedBrands: ['All'], // Default state
+  selectedBrands: ['All'], 
 
   toggleBrand: (brand) => set((state) => {
     const current = state.selectedBrands;
     
-    // --- Special 'All' Logic ---
     if (brand === 'All') {
       return { selectedBrands: current.includes('All') ? [] : ['All'] };
     }
@@ -112,7 +109,6 @@ export const useFilterBrandsForMale = create<FilterBrandStateForMale>((set) => (
       newSelection = [...newSelection, brand];
     }
     
-    // If all other brands are deselected, revert to selecting 'All'
     if (newSelection.length === 0) {
       newSelection = ['All'];
     }

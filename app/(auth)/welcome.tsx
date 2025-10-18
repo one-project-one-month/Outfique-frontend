@@ -33,14 +33,14 @@ const Welcome = () => {
         >
 
           <Button size="medium"
-            onPress={() => router.push('/(auth)/login')}
+            onPress={() => router.push('/(auth)/searchMale')}
           >
             Sign In
           </Button>
 
           <GlassButton
             size="medium"
-            onPress={() => router.push('/(auth)/register')}
+            onPress={() => router.push('/(auth)/searchFemale')}
             glassProps={{
               glassEffectStyle: 'clear'
             }}

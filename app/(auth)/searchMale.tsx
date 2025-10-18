@@ -245,7 +245,7 @@ const SearchMale = () => {
                   />
                 </View>
               )}
-              renderAboveThumbComponent={(index: number, value: number) => (
+              renderBelowThumbComponent={(index: number, value: number) => (
                 <View style={styles.thumbLabelContainer}>
                   <Text style={styles.thumbLabelText}>
                     {index === 1 && value === displayMaxLimit
@@ -555,7 +555,6 @@ const styles = StyleSheet.create({
   },
   thumbLabelContainer: {
     position: "absolute",
-    top: 40,
     alignSelf: "center",
   },
   thumbLabelText: {
