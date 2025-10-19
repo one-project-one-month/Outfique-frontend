@@ -1,22 +1,23 @@
+import { colors } from '@/constants/theme';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const TabBar = ({ activeTab, onTabPress }) => (
     <View style={styles.container}>
-        <TouchableOpacity style={[styles.tab, activeTab === 'saved' && styles.activeTab]}  onPress={() => onTabPress('saved')}>
-            <Icon name="heart-outline" size={24} color={activeTab === 'saved' ? '#a0ddff' : '#333'} />
-            <Text style={{ color: activeTab === 'saved' ? '#a0ddff' : '#333' }}>Saved</Text>
+        <TouchableOpacity style={[styles.tab, activeTab === 'saved' && styles.activeTab]} onPress={() => onTabPress('saved')}>
+            <Icon name="heart-outline" size={24} color={activeTab === 'saved' ? colors.uranianBlue : colors.midnightNavy} />
+            <Text style={{ color: activeTab === 'saved' ? colors.uranianBlue : colors.midnightNavy }}>Saved</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.tab, activeTab === 'home' && styles.activeTab]} onPress={() => onTabPress('home')}>
-            <Icon name="home-outline" size={24}  color={activeTab === 'home' ? '#a0ddff' : '#333'} />
-            <Text style={{ color: activeTab === 'home' ? '#a0ddff' : '#333' }}>Home</Text>
+            <Icon name="home-outline" size={24} color={activeTab === 'home' ? colors.uranianBlue : colors.midnightNavy} />
+            <Text style={{ color: activeTab === 'home' ? colors.uranianBlue : colors.midnightNavy }}>Home</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
             style={[styles.tab, activeTab === 'closet' && styles.activeTab]} onPress={() => onTabPress('closet')}>
-            <Icon name="hanger" size={24} color={activeTab === 'closet' ? '#a0ddff' : '#333'} />
-            <Text style={{ color: activeTab === 'closet' ? '#a0ddff' : '#333' }}>Closet</Text>
+            <Icon name="hanger" size={24} color={activeTab === 'closet' ? colors.uranianBlue : colors.midnightNavy} />
+            <Text style={{ color: activeTab === 'closet' ? colors.uranianBlue : colors.midnightNavy }}>Closet</Text>
         </TouchableOpacity>
     </View>
 );
@@ -24,7 +25,7 @@ const TabBar = ({ activeTab, onTabPress }) => (
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        backgroundColor: '#a0ddff',
+        backgroundColor: colors.uranianBlue,
         borderRadius: 16,
         padding: 8,
         justifyContent: 'space-between',

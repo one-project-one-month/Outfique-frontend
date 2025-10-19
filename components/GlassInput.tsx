@@ -2,7 +2,7 @@ import { isIos26OrHigher } from '@/lib/utils';
 import { GlassView } from 'expo-glass-effect';
 import { EyeIcon, EyeSlashIcon } from 'phosphor-react-native';
 import React, { useState } from 'react';
-import { TextInput, TextInputProps, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { Text, TextInput, TextInputProps, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 interface GlassInputProps extends TextInputProps {
   size?: 'small' | 'medium' | 'large';
@@ -14,6 +14,7 @@ interface GlassInputProps extends TextInputProps {
   };
   isPassword?: boolean;
   showPasswordToggle?: boolean;
+  leftIcon?: React.ReactNode;
 }
 
 const GlassInput: React.FC<GlassInputProps> = ({
@@ -23,6 +24,7 @@ const GlassInput: React.FC<GlassInputProps> = ({
   glassProps,
   isPassword = false,
   showPasswordToggle = true,
+  leftIcon,
   secureTextEntry,
   ...textInputProps
 }) => {
@@ -111,6 +113,41 @@ const GlassInput: React.FC<GlassInputProps> = ({
     );
   };
 
+  const renderLeftIcon = () => {
+    if (!leftIcon) return null;
+    return (
+      <View style={{
+        position: 'absolute',
+        left: 16,
+        top: '50%',
+        transform: [{ translateY: -10 }],
+        zIndex: 1,
+      }}
+      > {leftIcon}
+      </View>);
+  };
+
+  if (leftIcon) {
+    return (
+      <View>
+        {renderLeftIcon()}
+        <TextInput
+          style={[
+            combinedInputStyle,
+            combinedTextStyle,
+            glassProps?.glassEffectStyle === 'regular' && {
+              backgroundColor: 'rgba(10, 18, 42, 0.8)',
+              borderWidth: 0,
+            }
+          ] as any}
+          placeholderTextColor="rgba(255, 255, 255, 0.6)"
+          secureTextEntry={shouldSecureText}
+          {...textInputProps}
+        />
+      </View>
+    );
+  }
+
   if (isIos26OrHigher) {
     if (isPassword && showPasswordToggle) {
       return (
@@ -136,6 +173,7 @@ const GlassInput: React.FC<GlassInputProps> = ({
         style={combinedInputStyle}
         {...defaultGlassProps}
       >
+        <Text>Hello world</Text>
         <TextInput
           style={[combinedTextStyle, { flex: 1 }]}
           placeholderTextColor="rgba(255, 255, 255, 0.6)"

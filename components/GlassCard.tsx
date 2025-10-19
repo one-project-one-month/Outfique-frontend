@@ -1,9 +1,9 @@
 import { isIos26OrHigher } from '@/lib/utils';
 import { GlassView } from 'expo-glass-effect';
 import React from 'react';
-import { Dimensions, Text, TextStyle, TouchableOpacity, TouchableOpacityProps, ViewStyle } from 'react-native';
+import { Dimensions, Text, TextStyle, View, ViewStyle } from 'react-native';
 
-interface GlassCardProps extends TouchableOpacityProps {
+interface GlassCardProps {
   children: React.ReactNode;
   size?: 'small' | 'medium' | 'large';
   cardStyle?: ViewStyle;
@@ -20,7 +20,6 @@ const GlassCard: React.FC<GlassCardProps> = ({
   cardStyle,
   textStyle,
   glassProps,
-  ...touchableProps
 }) => {
 
   const getCardStyles = (): ViewStyle => {
@@ -34,9 +33,9 @@ const GlassCard: React.FC<GlassCardProps> = ({
     const cardSize = (width - 40) / 2;
 
     const sizeStyles: ViewStyle = {
-      small: { height: 180, width: cardSize, paddingHorizontal: 20 },
-      medium: { height: 55, paddingHorizontal: 20 },
-      large: { height: 60, width: cardSize, paddingHorizontal: 20 },
+      small: { height: 170, width: cardSize, paddingHorizontal: 20 },
+      medium: { height: 240, paddingHorizontal: 20 },
+      large: { height: 280, width: cardSize, paddingHorizontal: 20 },
     }[size];
 
     if (isIos26OrHigher) {
@@ -87,7 +86,7 @@ const GlassCard: React.FC<GlassCardProps> = ({
 
   if (isIos26OrHigher) {
     return (
-      <TouchableOpacity {...touchableProps} activeOpacity={0.8}>
+      <View>
         <GlassView
           style={combinedCardStyle}
           {...defaultGlassProps}
@@ -98,21 +97,20 @@ const GlassCard: React.FC<GlassCardProps> = ({
             children
           )}
         </GlassView>
-      </TouchableOpacity>
+      </View>
     );
   }
 
   return (
-    <TouchableOpacity
+    <View
       style={[combinedCardStyle, glassProps?.glassEffectStyle === 'regular' && { backgroundColor: 'rgba(10, 18, 42, 0.8)', borderWidth: 0 }]}
-      {...touchableProps}
     >
       {typeof children === 'string' ? (
         <Text style={combinedTextStyle}>{children}</Text>
       ) : (
         children
       )}
-    </TouchableOpacity>
+    </View>
   );
 };
 

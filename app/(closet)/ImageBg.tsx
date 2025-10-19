@@ -1,6 +1,7 @@
 import BackButton from "@/components/BackButton";
 import GlassButton from "@/components/GlassButton";
 import ScreenWrapper from "@/components/ScreenWrapper";
+import { colors } from "@/constants/theme";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -8,7 +9,7 @@ import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from "reac
 
 const ImageBg = () => {
     const router = useRouter();
-    const [bg, setBg] = React.useState('white');
+    const [bg, setBg] = React.useState(colors.moonlightGray);
 
     return (
         <ScreenWrapper>
@@ -24,29 +25,41 @@ const ImageBg = () => {
                     glassProps={{
                         glassEffectStyle: 'clear'
                     }}
-                    onPress={() => setBg(bg === 'white' ? 'black' : 'white')}
+                    onPress={() => setBg(bg === colors.moonlightGray ? colors.midnightNavy : colors.moonlightGray)}
                     buttonStyle={{ borderRadius: 10, marginLeft: 10 }}>
-                    <Text style={{ color: 'white' }}>Background {bg === 'white' ? 'black' : 'white'} Color</Text>
+                    <Text style={{ color: colors.white }}>Background {bg === colors.moonlightGray ? 'Black' : 'White'} Color</Text>
                 </GlassButton>
             </View>
             <View style={[styles.imageBg, { backgroundColor: bg, borderColor: bg }]}>
                 <Image source={require('../../assets/bgrm.png')} style={{ width: '90%', height: '90%', resizeMode: 'contain' }} />
             </View>
-            <View style={styles.buttonRow}>
-                <GlassButton
-                    size="medium"
-                    glassProps={{ glassEffectStyle: 'clear' }}
-                    buttonStyle={styles.halfButton}
-                    onPress={() => router.push('/(closet)/Camera')}
-                >
-                    <Text style={styles.halfButtonText}>Try Again</Text>
-                </GlassButton>
 
-                <TouchableOpacity onPress={() => router.push('/(closet)/Detail')} style={[styles.halfButton, { backgroundColor: '#FAFAFA' }]}>
-                    <Text style={[styles.halfButtonText, { color: 'black' }]}>Next</Text>
+            <View style={styles.buttonRow}>
+                {/* Cancel Button */}
+                <View
+                    style={[styles.halfButtonContainer]}
+                >
+                    <GlassButton
+                        size="small"
+                        glassProps={{ glassEffectStyle: 'clear' }}
+                        onPress={() => router.push('/(closet)/Camera')}
+                        buttonStyle={styles.halfButton}
+                    >
+                        <Text style={styles.halfButtonText}>Try Again</Text>
+                    </GlassButton>
+                </View>
+
+                {/* Done Button */}
+                <TouchableOpacity
+                    style={[styles.halfButtonContainer]}
+                    activeOpacity={0.8}
+                    onPress={() => router.push('/(closet)/Detail')}
+                >
+                    <View style={[styles.halfButton, { backgroundColor: '#FAFAFA' }]}>
+                        <Text style={[styles.halfButtonText, { color: colors.dark[1] }]}>Next</Text>
+                    </View>
                 </TouchableOpacity>
             </View>
-
         </ScreenWrapper >
     );
 }
@@ -59,7 +72,7 @@ const styles = StyleSheet.create({
     },
     backText: {
         fontSize: 20,
-        color: 'white',
+        color: colors.white,
     },
     imageBg: {
         flex: 1,
@@ -72,22 +85,25 @@ const styles = StyleSheet.create({
     },
     buttonRow: {
         flexDirection: 'row',
-        width: '100%',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: 5,
         marginBottom: 60,
+        padding: 10
     },
-
-    halfButton: {
+    halfButtonContainer: {
         flex: 1,
-        marginHorizontal: 5,
+    },
+    halfButton: {
+        height: 50,
         borderRadius: 50,
-        paddingVertical: 12,
         justifyContent: 'center',
         alignItems: 'center',
+        width: '100%',
     },
-
     halfButtonText: {
         fontSize: 18,
-        color: 'white',
+        color: colors.white,
         textAlign: 'center',
     },
 

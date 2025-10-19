@@ -1,17 +1,32 @@
 import BackButton from "@/components/BackButton";
 import GlassCard from "@/components/GlassCard";
 import ScreenWrapper from "@/components/ScreenWrapper";
+import { colors } from "@/constants/theme";
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from "expo-router";
 import LottieView from 'lottie-react-native';
 import React from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, Linking, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Camera = () => {
     const router = useRouter();
     const [image, setImage] = React.useState<string | null>(null);
 
+
     const pickImage = async () => {
+        const lib = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (!lib.granted) {
+            Alert.alert(
+                "Permission required",
+                "Please enable Camera / Photo permission in Settings to use this feature.",
+                [
+                    { text: "Cancel", style: "cancel" },
+                    { text: "Open Settings", onPress: () => Linking.openURL("app-settings:") },
+                ]
+            );
+            return;
+        }
+
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
@@ -28,6 +43,19 @@ const Camera = () => {
     };
 
     const openCamera = async () => {
+        const cam = await ImagePicker.requestCameraPermissionsAsync();
+        if (!cam.granted) {
+            Alert.alert(
+                "Permission required",
+                "Please enable Camera / Photo permission in Settings to use this feature.",
+                [
+                    { text: "Cancel", style: "cancel" },
+                    { text: "Open Settings", onPress: () => Linking.openURL("app-settings:") },
+                ]
+            );
+            return;
+        }
+
         const result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
@@ -61,33 +89,36 @@ const Camera = () => {
 
                         {/* Centered Buttons */}
                         <View style={styles.buttonRow}>
-                            <GlassCard
-                                size="small"
-                                glassProps={{ glassEffectStyle: 'clear' }}
-                                onPress={pickImage}
-                                cardStyle={{ borderRadius: 10 }}
-                            >
-                                <Image
-                                    source={require('../../assets/image.png')}
-                                    resizeMode="stretch"
-                                    style={styles.icon}
-                                />
-                                <Text style={styles.buttonText}>Photos</Text>
-                            </GlassCard>
+                            <TouchableOpacity onPress={pickImage} activeOpacity={0.8}>
+                                <GlassCard
+                                    size="small"
+                                    glassProps={{ glassEffectStyle: 'clear' }}
+                                    cardStyle={{ borderRadius: 10 }}
+                                >
+                                    <Image
+                                        source={require('../../assets/image.png')}
+                                        resizeMode="stretch"
+                                        style={styles.icon}
+                                    />
+                                    <Text style={styles.buttonText}>Photos</Text>
+                                </GlassCard>
+                            </TouchableOpacity>
 
-                            <GlassCard
-                                size="small"
-                                glassProps={{ glassEffectStyle: 'clear' }}
-                                onPress={openCamera}
-                                cardStyle={{ borderRadius: 10 }}
-                            >
-                                <Image
-                                    source={require('../../assets/camera.png')}
-                                    resizeMode="stretch"
-                                    style={styles.icon}
-                                />
-                                <Text style={styles.buttonText}>Camera</Text>
-                            </GlassCard>
+                            <TouchableOpacity onPress={openCamera} activeOpacity={0.7}>
+                                <GlassCard
+                                    size="small"
+                                    glassProps={{ glassEffectStyle: 'clear' }}
+                                    onPress={openCamera}
+                                    cardStyle={{ borderRadius: 10 }}
+                                >
+                                    <Image
+                                        source={require('../../assets/camera.png')}
+                                        resizeMode="stretch"
+                                        style={styles.icon}
+                                    />
+                                    <Text style={styles.buttonText}>Camera</Text>
+                                </GlassCard>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>
@@ -106,7 +137,7 @@ const Camera = () => {
                                 loop
                                 style={{ width: 100, height: 100, marginBottom: -10 }}
                             />
-                            <Text style={{ fontSize: 16, color: "#a0ddff", alignItems: 'center' }}>Highlighting your outfit…</Text>
+                            <Text style={{ fontSize: 16, color: colors.uranianBlue, alignItems: 'center' }}>Highlighting your outfit…</Text>
                         </View>
                     </View>
                 </View>
@@ -126,7 +157,7 @@ const styles = StyleSheet.create({
     },
     backText: {
         fontSize: 20,
-        color: 'white',
+        color: colors.white,
     },
     contentWrapper: {
         flex: 1,
@@ -135,7 +166,7 @@ const styles = StyleSheet.create({
         marginTop: 100,
     },
     title: {
-        color: 'white',
+        color: colors.white,
         fontSize: 27,
         padding: 20
     },
@@ -143,7 +174,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: 20,
+        gap: 18,
+        paddingLeft: 3,
+        paddingRight: 3
     },
     icon: {
         width: 50,
@@ -151,7 +184,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 18,
-        color: '#a0ddff',
+        color: colors.uranianBlue,
         marginTop: 10,
         textAlign: 'center',
     },

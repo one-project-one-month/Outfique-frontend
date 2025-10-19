@@ -1,6 +1,7 @@
 import BackButton from '@/components/BackButton';
 import GlassButton from '@/components/GlassButton';
 import GlassInput from '@/components/GlassInput';
+import { colors } from '@/constants/theme';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
 import { useRouter } from 'expo-router';
@@ -12,6 +13,7 @@ import Category from './factor/Category';
 
 const Home = () => {
     const [active, setActive] = React.useState(false);
+    const [activeCategory, setActiveCategory] = React.useState("All");
     const router = useRouter();
     return (
         <Tabs>
@@ -22,16 +24,18 @@ const Home = () => {
             </View>
 
             <View style={styles.container}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, width: '100%' }}>
                     {/* Search and Filter Row */}
-                    <GlassInput
-                        placeholder="Search"
-                        autoCapitalize="none"
-                        size="small"
-                        glassProps={{ glassEffectStyle: 'clear' }}
-                        leftIcon={<Feather name="search" size={20} color="#a0ddff" />}
-                        inputStyle={{ flex: 1 }}
-                    />
+                    <View style={{ flex: 1 }}>
+                        <GlassInput
+                            placeholder="Search"
+                            autoCapitalize="none"
+                            size="small"
+                            glassProps={{ glassEffectStyle: 'clear' }}
+                            leftIcon={<Feather name="search" size={20} color="#a0ddff" />}
+                            inputStyle={{ width: '100%', borderRadius: 10, padding: 10, paddingLeft: 40 }}
+                        />
+                    </View>
 
                     {/* Filter button */}
                     <GlassButton
@@ -41,18 +45,18 @@ const Home = () => {
                         }}
                         buttonStyle={{ borderRadius: 10, marginLeft: 10 }}
                     >
-                        <Image style={{ width: 27, height: 27, tintColor: '#a0ddff' }} source={require('../../assets/filter.png')} />
+                        <Image style={{ width: 27, height: 27, tintColor: colors.uranianBlue }} source={require('../../assets/filter.png')} />
                     </GlassButton>
 
                 </View>
 
                 {/* Category Filters  */}
                 <View>
-                    <Category />
+                    <Category setActiveCategory={setActiveCategory} activeCategory={activeCategory} />
                 </View>
 
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ color: '#A8A9AD', fontSize: 15, textAlign: 'center' }}>
+                    <Text style={{ color: colors.moonlightGray, fontSize: 15, textAlign: 'center' }}>
                         Add your outfit picture here and,{"\n"}see them appear in your collection!
                     </Text>
                 </View>
@@ -65,7 +69,7 @@ const Home = () => {
                         placement='top'
                         backgroundColor='transparent'
                         arrowSize={{ width: 20, height: 15 }}
-                        childContentSpacing={45}
+                        childContentSpacing={35}
                         showChildInTooltip={false}
                         content={<Text style={styles.tooltipText}>Create your outfit</Text>}
                         onClose={() => setActive(false)}
@@ -75,14 +79,14 @@ const Home = () => {
                                 setActive(true);
                                 setTimeout(() => {
                                     setActive(false);
-                                    router.push('/(closet)/Camera');
+                                    router.push('/Camera');
                                 }, 500);
                             }}
                             onLongPress={() => setActive(true)}
                             delayLongPress={150}
-                            style={[styles.addButton, { backgroundColor: active ? '#a0ddff' : '#0A122A' }]}
+                            style={[styles.addButton, { backgroundColor: active ? colors.uranianBlue : colors.midnightNavy }]}
                         >
-                            <AntDesign name="plus" size={30} color={active ? '#0A122A' : '#a0ddff'} />
+                            <AntDesign name="plus" size={30} color={active ? colors.midnightNavy : colors.uranianBlue} />
                         </Pressable>
                     </Tooltip>
                 </View>
@@ -119,7 +123,7 @@ const styles = StyleSheet.create({
     },
     tooltipContent: {
         flex: 1,
-        backgroundColor: 'rgba(10, 18, 42, 0.8)',
+        backgroundColor: colors.midnightNavy,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
@@ -127,7 +131,7 @@ const styles = StyleSheet.create({
 
     },
     tooltipText: {
-        color: '#a0ddff',
+        color: colors.uranianBlue,
         fontSize: 16,
         fontWeight: '600',
     },
