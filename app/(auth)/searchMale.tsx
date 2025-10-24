@@ -431,7 +431,7 @@ const styles = StyleSheet.create({
   leftSection: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 5,
+    gap: 0,
   },
   // Styles for Preference Text and Reset Text
   preferenceText: {

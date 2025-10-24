@@ -33,7 +33,7 @@ const Welcome = () => {
         >
 
           <Button size="medium"
-            onPress={() => router.push('/(auth)/searchMale')}
+            onPress={() => router.push('/(auth)/trendingItems')}
           >
             Sign In
           </Button>

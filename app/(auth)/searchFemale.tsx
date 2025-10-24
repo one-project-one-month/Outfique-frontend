@@ -18,6 +18,7 @@ import {
   type WeatherName,
 } from "@/store";
 import { Slider } from "@miblanchard/react-native-slider";
+import { router } from "expo-router";
 import { CaretCircleDownIcon, StarFourIcon } from "phosphor-react-native";
 import React, { useState } from "react";
 import {
@@ -96,17 +97,7 @@ const SearchFemale = () => {
   };
 
   const handleApplyAll = () => {
-    const appliedMin =
-      currency === "MMK" ? minPrice : Math.round(minPrice * MMK_TO_BAHT);
-    const appliedMax =
-      currency === "MMK" ? maxPrice : Math.round(maxPrice * MMK_TO_BAHT);
-    console.log("Categories:", selectedCategories);
-    console.log("Price Range:", [appliedMin, appliedMax]);
-    console.log("Colors:", selectedColors);
-    console.log("Fashion Styles:", selectedStyles);
-    console.log("Weather Conditions:", selectedConditions);
-    console.log("Brands:", selectedBrands);
-    setShowShareModal(true);
+    router.back();
   };
 
   const getColorHex = (colorName: string): string => {
@@ -436,7 +427,7 @@ const styles = StyleSheet.create({
   leftSection: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 5,
+    gap: 0,
   },
   // Styles for Preference Text and Reset Text
   preferenceText: {
