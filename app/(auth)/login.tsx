@@ -3,7 +3,6 @@ import GlassButton from '@/components/GlassButton';
 import GlassInput from '@/components/GlassInput';
 import ScreenWrapper from '@/components/ScreenWrapper';
 import { colors } from '@/constants/theme';
-import { isIos } from '@/lib/utils';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useRouter } from 'expo-router';
 import { CheckCircleIcon, CircleIcon } from 'phosphor-react-native';
@@ -33,7 +32,7 @@ const Login = () => {
     <ScreenWrapper>
 
       {/* Back Button */}
-      {isIos && <BackButton />}
+      <BackButton />
 
       {/* Main Container  */}
       <View style={styles.container}>
