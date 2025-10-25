@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.terrythant.Outfiquefrontend"
+      "bundleIdentifier": "com.terrythant.Outfiquefrontend",
     },
     "android": {
       "adaptiveIcon": {
@@ -34,6 +34,13 @@
           "ios": {
             "useFrameworks": "static"
           }
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends.",
+          "cameraPermission": "The app accesses your camera to take photos of your outfit."
         }
       ],
       "expo-router",
