@@ -4,14 +4,20 @@ import GlassInput from '@/components/GlassInput';
 import ScreenWrapper from '@/components/ScreenWrapper';
 import { colors } from '@/constants/theme';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useHeaderHeight } from '@react-navigation/elements';
 import { useRouter } from 'expo-router';
 import { CheckCircleIcon, CircleIcon } from 'phosphor-react-native';
 import React from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const Login = () => {
   const router = useRouter();
+  const headerHeight = useHeaderHeight();
+  const keyboardVerticalOffset =
+    Platform.OS === 'ios'
+      ? headerHeight
+      : headerHeight + (StatusBar.currentHeight ?? 0);
 
 
   const { control, handleSubmit, formState: { errors } } = useForm({
@@ -37,9 +43,9 @@ const Login = () => {
       {/* Main Container  */}
       <View style={styles.container}>
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={{ flex: 1 }}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+          keyboardVerticalOffset={keyboardVerticalOffset}
         >
           <ScrollView
             contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }}
@@ -198,7 +204,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   formContainer: {
-    // flex: 1, // remove flex: 1 to allow content to not stretch
     marginTop: 40,
   },
   input: {
@@ -229,7 +234,7 @@ const styles = StyleSheet.create({
   },
 
   errorText: {
-    color: 'yellow',
+    color: colors.red.light2,
     marginLeft: 15,
     marginTop: 5,
     fontSize: 12

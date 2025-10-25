@@ -1,29 +1,35 @@
 import { isIos26OrHigher } from '@/lib/utils';
 import { GlassView } from 'expo-glass-effect';
-import { EyeIcon, EyeSlashIcon } from 'phosphor-react-native';
+import { EyeIcon, EyeSlashIcon, MagnifyingGlassIcon } from 'phosphor-react-native';
 import React, { useState } from 'react';
-import { TextInput, TextInputProps, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { Text, TextInput, TextInputProps, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 interface GlassInputProps extends TextInputProps {
-  size?: 'small' | 'medium' | 'large';
+  size?: "small" | "medium" | "large";
   inputStyle?: ViewStyle;
   textStyle?: TextStyle;
   glassProps?: {
     tintColor?: string;
-    glassEffectStyle?: 'regular' | 'clear';
+    glassEffectStyle?: "regular" | "clear";
   };
   isPassword?: boolean;
+  isSearch?: boolean;
   showPasswordToggle?: boolean;
+  error?: boolean;
+  leftIcon?: React.ReactNode;
 }
 
 const GlassInput: React.FC<GlassInputProps> = ({
-  size = 'medium',
+  size = "medium",
   inputStyle,
   textStyle,
   glassProps,
   isPassword = false,
+  isSearch = false,
   showPasswordToggle = true,
+  leftIcon,
   secureTextEntry,
+  error = false,
   ...textInputProps
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -32,7 +38,7 @@ const GlassInput: React.FC<GlassInputProps> = ({
 
   const getInputStyles = (): ViewStyle => {
     const baseStyles: ViewStyle = {
-      justifyContent: 'center',
+      justifyContent: "center",
       borderRadius: 25,
       paddingHorizontal: 20,
     };
@@ -51,9 +57,9 @@ const GlassInput: React.FC<GlassInputProps> = ({
     }
 
     const inputStyles: ViewStyle = {
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      backgroundColor: "rgba(255, 255, 255, 0.1)",
       borderWidth: 1,
-      borderColor: 'rgba(255, 255, 255, 0.3)'
+      borderColor: error ? '#FF5C5C' : 'rgba(255, 255, 255, 0.3)',
     };
 
     return {
@@ -65,9 +71,9 @@ const GlassInput: React.FC<GlassInputProps> = ({
 
   const getTextStyles = (): TextStyle => {
     const baseTextStyles: TextStyle = {
-      fontSize: size === 'small' ? 14 : size === 'large' ? 18 : 16,
-      color: '#FFFFFF',
-      fontWeight: '400',
+      fontSize: size === "small" ? 14 : size === "large" ? 18 : 16,
+      color: "#FFFFFF",
+      fontWeight: "400",
     };
 
     return {
@@ -77,7 +83,7 @@ const GlassInput: React.FC<GlassInputProps> = ({
   };
 
   const defaultGlassProps = {
-    tintColor: 'rgba(255,255,255,0.05)',
+    tintColor: "rgba(255,255,255,0.05)",
     ...glassProps,
   };
 
@@ -95,32 +101,68 @@ const GlassInput: React.FC<GlassInputProps> = ({
       <TouchableOpacity
         onPress={() => setIsPasswordVisible(!isPasswordVisible)}
         style={{
-          position: 'absolute',
+          position: "absolute",
           right: 16,
-          top: '55%',
+          top: "55%",
           transform: [{ translateY: -12 }],
           padding: 4,
           zIndex: 1,
         }}
       >
-        {isPasswordVisible ?
-          <EyeSlashIcon color="#A8A9AD" size={20} /> :
+        {isPasswordVisible ? (
+          <EyeSlashIcon color="#A8A9AD" size={20} />
+        ) : (
           <EyeIcon color="#A8A9AD" size={20} />
-        }
+        )}
       </TouchableOpacity>
     );
   };
 
+  const renderLeftIcon = () => {
+    if (!leftIcon) return null;
+    return (
+      <View style={{
+        position: 'absolute',
+        left: 16,
+        top: '50%',
+        transform: [{ translateY: -10 }],
+        zIndex: 1,
+      }}
+      > {leftIcon}
+      </View>);
+  };
+
+  if (leftIcon) {
+    return (
+      <View>
+        {renderLeftIcon()}
+        <TextInput
+          style={[
+            combinedInputStyle,
+            combinedTextStyle,
+            glassProps?.glassEffectStyle === 'regular' && {
+              backgroundColor: 'rgba(10, 18, 42, 0.8)',
+              borderWidth: 0,
+            }
+          ] as any}
+          placeholderTextColor="rgba(255, 255, 255, 0.6)"
+          secureTextEntry={shouldSecureText}
+          {...textInputProps}
+        />
+      </View>
+    );
+  }
+
   if (isIos26OrHigher) {
     if (isPassword && showPasswordToggle) {
       return (
-        <View style={{ position: 'relative' }}>
-          <GlassView
-            style={combinedInputStyle}
-            {...defaultGlassProps}
-          >
+        <View style={{ position: "relative" }}>
+          <GlassView style={combinedInputStyle} {...defaultGlassProps}>
             <TextInput
-              style={[combinedTextStyle, { flex: 1, paddingRight: isPassword ? 40 : 0 }]}
+              style={[
+                combinedTextStyle,
+                { flex: 1, paddingRight: isPassword ? 40 : 0 },
+              ]}
               placeholderTextColor="rgba(255, 255, 255, 0.6)"
               secureTextEntry={shouldSecureText}
               {...textInputProps}
@@ -136,6 +178,7 @@ const GlassInput: React.FC<GlassInputProps> = ({
         style={combinedInputStyle}
         {...defaultGlassProps}
       >
+        <Text>Hello world</Text>
         <TextInput
           style={[combinedTextStyle, { flex: 1 }]}
           placeholderTextColor="rgba(255, 255, 255, 0.6)"
@@ -148,17 +191,19 @@ const GlassInput: React.FC<GlassInputProps> = ({
 
   if (isPassword && showPasswordToggle) {
     return (
-      <View style={{ position: 'relative' }}>
+      <View style={{ position: "relative" }}>
         <TextInput
-          style={[
-            combinedInputStyle,
-            combinedTextStyle,
-            { paddingRight: 40 },
-            glassProps?.glassEffectStyle === 'regular' && {
-              backgroundColor: 'rgba(10, 18, 42, 0.8)',
-              borderWidth: 0
-            }
-          ] as any}
+          style={
+            [
+              combinedInputStyle,
+              combinedTextStyle,
+              { paddingRight: 40 },
+              glassProps?.glassEffectStyle === "regular" && {
+                backgroundColor: "rgba(10, 18, 42, 0.8)",
+                borderWidth: 0,
+              },
+            ] as any
+          }
           placeholderTextColor="rgba(255, 255, 255, 0.6)"
           secureTextEntry={shouldSecureText}
           {...textInputProps}
@@ -167,17 +212,51 @@ const GlassInput: React.FC<GlassInputProps> = ({
       </View>
     );
   }
+  if (isSearch) {
+    return (
+      <View style={{ position: "relative", flex: 1 }}>
+        <TextInput
+          style={
+            [
+              combinedInputStyle,
+              combinedTextStyle,
+              glassProps?.glassEffectStyle === "regular" && {
+                backgroundColor: "rgba(10, 18, 42, 0.8)",
+                borderWidth: 0,
+              },
+              { paddingLeft: 45 },
+            ] as any
+          }
+          placeholderTextColor="rgba(255, 255, 255, 0.6)"
+          secureTextEntry={shouldSecureText}
+          {...textInputProps}
+        />
+        <MagnifyingGlassIcon
+          color="white"
+          size={20}
+          style={{
+            position: "absolute",
+            left: 16,
+            top: "55%",
+            transform: [{ translateY: -12 }],
+          }}
+        />
+      </View>
+    );
+  }
 
   return (
     <TextInput
-      style={[
-        combinedInputStyle,
-        combinedTextStyle,
-        glassProps?.glassEffectStyle === 'regular' && {
-          backgroundColor: 'rgba(10, 18, 42, 0.8)',
-          borderWidth: 0
-        }
-      ] as any}
+      style={
+        [
+          combinedInputStyle,
+          combinedTextStyle,
+          glassProps?.glassEffectStyle === "regular" && {
+            backgroundColor: "rgba(10, 18, 42, 0.8)",
+            borderWidth: 0,
+          },
+        ] as any
+      }
       placeholderTextColor="rgba(255, 255, 255, 0.6)"
       secureTextEntry={shouldSecureText}
       {...textInputProps}
