@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { colors } from "../constants/theme";
+import { colors } from "../../constants/theme";
 
 const convertHeight = (
   feet: string,
@@ -42,8 +42,8 @@ const convertHeight = (
 
 // Height ranges - Change these values to adjust min/max heights
 const FEET = Array.from({ length: 4 }, (_, i) => (4 + i).toString());
-const INCHES = Array.from({ length: 12 }, (_, i) => i.toString()); 
-const CENTIMETERS = Array.from({ length: 91 }, (_, i) => (130 + i).toString()); 
+const INCHES = Array.from({ length: 12 }, (_, i) => i.toString());
+const CENTIMETERS = Array.from({ length: 91 }, (_, i) => (130 + i).toString());
 const UNITS = ["cm", "ft in"];
 
 // Custom Wheel Picker Component
@@ -99,7 +99,6 @@ const WheelPicker = ({
   const handlePress = (item: string, index: number) => {
     if (isLocked || item === selectedValue) return;
 
-    
     onValueChange(item);
 
     setTimeout(() => {
@@ -146,14 +145,43 @@ const WheelPicker = ({
 
 // ====================================================================
 
-const CustomHeightPicker = () => {
+type CustomHeightPickerProps = {
+  onHeightChange?: (height: {
+    unit: "cm" | "ft in";
+    cm: string;
+    feet: string;
+    inches: string;
+  }) => void;
+  initialHeight?: {
+    unit: "cm" | "ft in";
+    cm: string;
+    feet: string;
+    inches: string;
+  } | null;
+};
+
+const CustomHeightPicker = ({
+  onHeightChange,
+  initialHeight,
+}: CustomHeightPickerProps) => {
   const [state, setState] = useState({
-    feet: "5",
-    inches: "4",
-    cm: "164",
-    unit: "cm" as "ft in" | "cm",
+    feet: initialHeight?.feet || "5",
+    inches: initialHeight?.inches || "4",
+    cm: initialHeight?.cm || "164",
+    unit: (initialHeight?.unit || "cm") as "ft in" | "cm",
   });
   const [isTransitioning, setIsTransitioning] = useState(false);
+
+  React.useEffect(() => {
+    if (onHeightChange) {
+      onHeightChange({
+        unit: state.unit,
+        cm: state.cm,
+        feet: state.feet,
+        inches: state.inches,
+      });
+    }
+  }, [state.unit, state.cm, state.feet, state.inches, onHeightChange]);
 
   const handleFeetChange = (newFeet: string) => {
     if (isTransitioning || newFeet === state.feet) return;

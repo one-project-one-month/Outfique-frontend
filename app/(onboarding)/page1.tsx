@@ -4,8 +4,9 @@ import ScreenWrapper from "@/components/ScreenWrapper";
 import StarSlider from "@/components/StarSlider";
 import { colors } from "@/constants/theme";
 import { isIos } from "@/lib/utils";
+import { useOnboardingStore } from "@/store/onboardingStore";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -17,6 +18,8 @@ import {
 
 const Page1 = () => {
   const router = useRouter();
+  const username = useOnboardingStore((state) => state.username);
+  const setUsername = useOnboardingStore((state) => state.setUsername);
 
   return (
     <ScreenWrapper>
@@ -40,14 +43,25 @@ const Page1 = () => {
             glassProps={{ glassEffectStyle: "clear" }}
             inputStyle={styles.input}
             size="small"
+            value={username}
+            onChangeText={setUsername}
+            autoCapitalize="none"
+            autoCorrect={false}
+            returnKeyType="done"
+            
           />
         </View>
 
         <View style={styles.footerButton}>
           <TouchableOpacity
             onPress={() => router.push("/(onboarding)/page2")}
-            style={styles.continueButton}
+            style={[styles.continueButton,
+                username.trim().length === 0 && { opacity: 0.5 }
+            ]}
+            disabled={username.trim().length === 0}
             activeOpacity={0.8}
+
+
           >
             <Text style={styles.buttonText}>Continue</Text>
           </TouchableOpacity>
@@ -70,7 +84,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    marginTop: 50,
+    marginTop: 56,
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",

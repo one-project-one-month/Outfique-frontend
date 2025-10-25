@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { colors } from "../constants/theme";
+import { colors } from "../../constants/theme";
 
 const WheelPicker = ({
   data,
@@ -119,18 +119,35 @@ const MONTHS = [
 // Years from 1985 to 2019
 const YEARS = Array.from({ length: 35 }, (_, i) => (1985 + i).toString());
 
-const CustomDatePicker = () => {
-  const [month, setMonth] = useState("January");
-  const [day, setDay] = useState("1");
-  const [year, setYear] = useState("2000");
+/**
+ * CustomDatePicker Props
+ * @param onDateChange -
+ * @param initialDate
+ */
+type CustomDatePickerProps = {
+  onDateChange?: (date: { day: string; month: string; year: string }) => void;
+  initialDate?: { day: string; month: string; year: string } | null;
+};
 
- 
+const CustomDatePicker = ({
+  onDateChange,
+  initialDate,
+}: CustomDatePickerProps) => {
+  const [month, setMonth] = useState(initialDate?.month || "January");
+  const [day, setDay] = useState(initialDate?.day || "1");
+  const [year, setYear] = useState(initialDate?.year || "2000");
+
+  React.useEffect(() => {
+    if (onDateChange) {
+      onDateChange({ day, month, year });
+    }
+  }, [day, month, year, onDateChange]);
+
   const getNumberOfDays = () => {
     const monthIndex = MONTHS.indexOf(month);
     const yearNumber = parseInt(year);
 
     const lastDay = new Date(yearNumber, monthIndex + 1, 0).getDate();
-
 
     const daysArray = [];
     for (let i = 1; i <= lastDay; i++) {
@@ -141,13 +158,12 @@ const CustomDatePicker = () => {
 
   const days = getNumberOfDays();
 
-
   React.useEffect(() => {
     const currentDay = parseInt(day);
     const maxDay = days.length;
 
     if (currentDay > maxDay) {
-      setDay(maxDay.toString()); 
+      setDay(maxDay.toString());
     }
   }, [days, day]);
 

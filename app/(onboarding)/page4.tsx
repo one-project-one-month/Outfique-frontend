@@ -1,15 +1,18 @@
 import BackButton from "@/components/BackButton";
-import WeightPicker from "@/components/CustomWeightPicker";
+import WeightPicker from "@/components/onboarding/CustomWeightPicker";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import StarSlider from "@/components/StarSlider";
 import { colors } from "@/constants/theme";
 import { isIos } from "@/lib/utils";
+import { useOnboardingStore } from "@/store/onboardingStore";
 import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Page4 = () => {
   const router = useRouter();
+  const weight = useOnboardingStore((state) => state.weight);
+  const setWeight = useOnboardingStore((state) => state.setWeight);
 
   return (
     <ScreenWrapper>
@@ -27,11 +30,11 @@ const Page4 = () => {
         </View>
       </View>
 
-      <WeightPicker />
+      <WeightPicker onWeightChange={setWeight} initialWeight={weight} />
 
       <View style={styles.footerButton}>
         <TouchableOpacity
-          onPress={() => router.push("/(onboarding)/page1")}
+          onPress={() => router.push("/(onboarding)/page5")}
           style={styles.continueButton}
           activeOpacity={0.8}
         >
@@ -55,7 +58,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    marginTop: 50,
+    marginTop: 56,
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",

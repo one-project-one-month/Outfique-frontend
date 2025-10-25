@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { colors } from "../constants/theme";
+import { colors } from "../../constants/theme";
 
 // Utility function for quick conversion
 const convertWeight = (
@@ -139,15 +139,54 @@ const WheelPicker = ({
 
 // ====================================================================
 
-const CustomWeightPicker = () => {
+type CustomWeightPickerProps = {
+  onWeightChange?: (weight: {
+    unit: "lb" | "kg";
+    lb: string;
+    kg: string;
+  }) => void;
+  initialWeight?: {
+    unit: "lb" | "kg";
+    lb: string;
+    kg: string;
+  } | null;
+};
+
+const CustomWeightPicker = ({
+  onWeightChange,
+  initialWeight,
+}: CustomWeightPickerProps) => {
   const [state, setState] = useState({
-    weight: "170",
-    unit: "lb" as "lb" | "kg",
+    weight:
+      initialWeight?.unit === "lb"
+        ? initialWeight.lb || "170"
+        : initialWeight?.kg || "70",
+    unit: (initialWeight?.unit || "lb") as "lb" | "kg",
   });
   const [isTransitioning, setIsTransitioning] = useState(false);
   const weightUpdateTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
     null
   );
+
+  React.useEffect(() => {
+    if (onWeightChange) {
+      // Calculate both lb and kg values
+      const lb =
+        state.unit === "lb"
+          ? state.weight
+          : convertWeight(state.weight, "kg", "lb");
+      const kg =
+        state.unit === "kg"
+          ? state.weight
+          : convertWeight(state.weight, "lb", "kg");
+
+      onWeightChange({
+        unit: state.unit,
+        lb,
+        kg,
+      });
+    }
+  }, [state.weight, state.unit, onWeightChange]);
 
   const currentWeights = state.unit === "lb" ? POUND_WEIGHTS : KILO_WEIGHTS;
 
@@ -169,7 +208,6 @@ const CustomWeightPicker = () => {
 
     if (newUnitCasted === state.unit || isTransitioning) return;
 
-    
     if (weightUpdateTimeoutRef.current) {
       clearTimeout(weightUpdateTimeoutRef.current);
       weightUpdateTimeoutRef.current = null;

@@ -1,10 +1,10 @@
 import BackButton from "@/components/BackButton";
-import CustomDatePicker from "@/components/CustomDatePicker";
+import CustomDatePicker from "@/components/onboarding/CustomDatePicker";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import StarSlider from "@/components/StarSlider";
 import { colors } from "@/constants/theme";
 import { isIos } from "@/lib/utils";
-import { LinearGradient } from "expo-linear-gradient";
+import { useOnboardingStore } from "@/store/onboardingStore";
 import { useRouter } from "expo-router";
 import React from "react";
 import {
@@ -18,6 +18,8 @@ import {
 
 const Page2 = () => {
   const router = useRouter();
+  const dob = useOnboardingStore((state) => state.dob);
+  const setDob = useOnboardingStore((state) => state.setDob);
 
   return (
     <ScreenWrapper>
@@ -37,7 +39,7 @@ const Page2 = () => {
           </View>
         </View>
         {/* date picker */}
-        <CustomDatePicker />
+        <CustomDatePicker onDateChange={setDob} initialDate={dob} />
 
         <View style={styles.footerButton}>
           <TouchableOpacity
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    marginTop: 50,
+    marginTop: 56,
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
@@ -102,5 +104,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
   },
-
 });

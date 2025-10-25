@@ -1,15 +1,18 @@
 import BackButton from "@/components/BackButton";
-import CustomHeightPicker from "@/components/CustomHeightPicker";
+import CustomHeightPicker from "@/components/onboarding/CustomHeightPicker";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import StarSlider from "@/components/StarSlider";
 import { colors } from "@/constants/theme";
 import { isIos } from "@/lib/utils";
+import { useOnboardingStore } from "@/store/onboardingStore";
 import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Page3 = () => {
   const router = useRouter();
+  const height = useOnboardingStore((state) => state.height);
+  const setHeight = useOnboardingStore((state) => state.setHeight);
 
   return (
     <ScreenWrapper>
@@ -27,7 +30,7 @@ const Page3 = () => {
         </View>
       </View>
 
-      <CustomHeightPicker />
+      <CustomHeightPicker onHeightChange={setHeight} initialHeight={height} />
 
       <View style={styles.footerButton}>
         <TouchableOpacity
@@ -55,7 +58,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    marginTop: 50,
+    marginTop: 56,
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
