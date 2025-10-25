@@ -45,20 +45,20 @@ const BackButton = ({
   )
 }
 
-export default BackButton
+export default BackButton;
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 10,
     paddingLeft: 15,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
   },
   button: {
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     borderRadius: 10,
-    borderCurve: 'continuous',
-    padding: 8
-  }
-})
+    borderCurve: "continuous",
+    padding: 8,
+  },
+});
