@@ -1,32 +1,37 @@
-import { isIos26OrHigher } from '@/lib/utils';
-import { GlassView } from 'expo-glass-effect';
-import React from 'react';
-import { Text, TextStyle, TouchableOpacity, TouchableOpacityProps, ViewStyle } from 'react-native';
+import { isIos26OrHigher } from "@/lib/utils";
+import { GlassView } from "expo-glass-effect";
+import React from "react";
+import {
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  TouchableOpacityProps,
+  ViewStyle,
+} from "react-native";
 
 interface GlassButtonProps extends TouchableOpacityProps {
   children: React.ReactNode;
-  size?: 'small' | 'medium' | 'large';
+  size?: "small" | "medium" | "large" | "icon";
   buttonStyle?: ViewStyle;
   textStyle?: TextStyle;
   glassProps?: {
     tintColor?: string;
-    glassEffectStyle?: 'regular' | 'clear';
+    glassEffectStyle?: "regular" | "clear";
   };
 }
 
 const GlassButton: React.FC<GlassButtonProps> = ({
   children,
-  size = 'medium',
+  size = "medium",
   buttonStyle,
   textStyle,
   glassProps,
   ...touchableProps
 }) => {
-
   const getButtonStyles = (): ViewStyle => {
     const baseStyles: ViewStyle = {
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       borderRadius: 25,
     };
 
@@ -34,6 +39,7 @@ const GlassButton: React.FC<GlassButtonProps> = ({
       small: { height: 40, paddingHorizontal: 16 },
       medium: { height: 55, paddingHorizontal: 20 },
       large: { height: 65, paddingHorizontal: 24 },
+      icon: { borderRadius: 10, height: 40, width: 40 },
     }[size];
 
     if (isIos26OrHigher) {
@@ -44,9 +50,9 @@ const GlassButton: React.FC<GlassButtonProps> = ({
     }
 
     const buttonStyles: ViewStyle = {
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      backgroundColor: "rgba(255, 255, 255, 0.1)",
       borderWidth: 1,
-      borderColor: 'rgba(255, 255, 255, 0.3)'
+      borderColor: "rgba(255, 255, 255, 0.3)",
     };
 
     return {
@@ -58,10 +64,10 @@ const GlassButton: React.FC<GlassButtonProps> = ({
 
   const getTextStyles = (): TextStyle => {
     const baseTextStyles: TextStyle = {
-      textAlign: 'center',
-      fontWeight: '600',
-      fontSize: size === 'small' ? 14 : size === 'large' ? 18 : 16,
-      color: '#FFFFFF',
+      textAlign: "center",
+      fontWeight: "600",
+      fontSize: size === "small" ? 14 : size === "large" ? 18 : 16,
+      color: "#FFFFFF",
     };
 
     return {
@@ -71,7 +77,7 @@ const GlassButton: React.FC<GlassButtonProps> = ({
   };
 
   const defaultGlassProps = {
-    tintColor: 'rgba(255,255,255,0.05)',
+    tintColor: "rgba(255,255,255,0.05)",
     ...glassProps,
   };
 
@@ -85,11 +91,8 @@ const GlassButton: React.FC<GlassButtonProps> = ({
   if (isIos26OrHigher) {
     return (
       <TouchableOpacity {...touchableProps} activeOpacity={0.8}>
-        <GlassView
-          style={combinedButtonStyle}
-          {...defaultGlassProps}
-        >
-          {typeof children === 'string' ? (
+        <GlassView style={combinedButtonStyle} {...defaultGlassProps}>
+          {typeof children === "string" ? (
             <Text style={combinedTextStyle}>{children}</Text>
           ) : (
             children
@@ -101,10 +104,16 @@ const GlassButton: React.FC<GlassButtonProps> = ({
 
   return (
     <TouchableOpacity
-      style={[combinedButtonStyle, glassProps?.glassEffectStyle === 'regular' && { backgroundColor: 'rgba(10, 18, 42, 0.8)', borderWidth: 0 }]}
+      style={[
+        combinedButtonStyle,
+        glassProps?.glassEffectStyle === "regular" && {
+          backgroundColor: "rgba(10, 18, 42, 0.8)",
+          borderWidth: 0,
+        },
+      ]}
       {...touchableProps}
     >
-      {typeof children === 'string' ? (
+      {typeof children === "string" ? (
         <Text style={combinedTextStyle}>{children}</Text>
       ) : (
         children
