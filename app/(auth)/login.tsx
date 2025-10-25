@@ -32,6 +32,7 @@ const Login = () => {
   type FormData = typeof control._defaultValues;
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     // Handle login logic here
+    router.push('/(onboarding)/page1')
   }
 
   return (

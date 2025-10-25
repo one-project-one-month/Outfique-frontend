@@ -2,7 +2,7 @@ import { isIos26OrHigher } from '@/lib/utils';
 import { GlassView } from 'expo-glass-effect';
 import { EyeIcon, EyeSlashIcon, MagnifyingGlassIcon } from 'phosphor-react-native';
 import React, { useState } from 'react';
-import { Text, TextInput, TextInputProps, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { TextInput, TextInputProps, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 interface GlassInputProps extends TextInputProps {
   size?: "small" | "medium" | "large";
@@ -178,7 +178,6 @@ const GlassInput: React.FC<GlassInputProps> = ({
         style={combinedInputStyle}
         {...defaultGlassProps}
       >
-        <Text>Hello world</Text>
         <TextInput
           style={[combinedTextStyle, { flex: 1 }]}
           placeholderTextColor="rgba(255, 255, 255, 0.6)"

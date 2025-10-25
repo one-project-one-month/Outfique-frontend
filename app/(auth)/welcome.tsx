@@ -3,7 +3,7 @@ import GlassButton from '@/components/GlassButton';
 import ScreenWrapper from '@/components/ScreenWrapper';
 import { colors } from '@/constants/theme';
 import { router } from 'expo-router';
-import { Pressable, Text, View } from 'react-native';
+import { View } from 'react-native';
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 
 const Welcome = () => {
@@ -24,9 +24,6 @@ const Welcome = () => {
           >
             to the world of Outfique &lt;3
           </Animated.Text>
-          <Pressable onPress={() => router.push('/(closet)/Home')}>
-            <Text style={{ color: 'white', fontSize: 20 }}>Closet</Text>
-          </Pressable>
         </View>
 
         <Animated.View
@@ -35,14 +32,14 @@ const Welcome = () => {
         >
 
           <Button size="medium"
-            onPress={() => router.push('/(auth)/trendingItems')}
+            onPress={() => router.push('/(auth)/login')}
           >
             Sign In
           </Button>
 
           <GlassButton
             size="medium"
-            onPress={() => router.push('/(auth)/searchFemale')}
+            onPress={() => router.push('/(auth)/register')}
             glassProps={{
               glassEffectStyle: 'clear'
             }}
