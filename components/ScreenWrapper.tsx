@@ -1,6 +1,6 @@
-import { ImageBackground } from 'expo-image';
-import React from 'react';
-import { Dimensions, Platform, StatusBar, ViewStyle } from 'react-native';
+import { ImageBackground } from "expo-image";
+import React from "react";
+import { Dimensions, Platform, StatusBar, ViewStyle } from "react-native";
 
 interface ScreenWrapperProps {
   style?: ViewStyle;
@@ -11,12 +11,12 @@ export interface ScreenWrapperRef {
   reloadImage: () => void;
 }
 
-const { height } = Dimensions.get('window');
+const { height } = Dimensions.get("window");
 
-const backgroundImage = require('@/assets/bg.png');
+const backgroundImage = require("@/assets/bg.png");
 
 const ScreenWrapper = ({ style, children }: ScreenWrapperProps) => {
-  let paddingTop = Platform.OS === 'ios' ? height * 0.05 : 50;
+  let paddingTop = Platform.OS === "ios" ? height * 0.05 : 50;
 
   return (
     <ImageBackground
@@ -26,15 +26,15 @@ const ScreenWrapper = ({ style, children }: ScreenWrapperProps) => {
           flex: 1,
           paddingTop,
         },
-        style
+        style,
       ]}
       contentFit="cover"
       cachePolicy={"memory-disk"}
     >
-      <StatusBar barStyle={'light-content'} />
+      <StatusBar barStyle={"light-content"} />
       {children}
     </ImageBackground>
-  )
-}
+  );
+};
 
-export default ScreenWrapper
+export default ScreenWrapper;

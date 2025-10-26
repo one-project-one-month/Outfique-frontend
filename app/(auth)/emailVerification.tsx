@@ -1,10 +1,12 @@
 import BackButton from '@/components/BackButton'
+import { Button } from '@/components/Button'
 import ScreenWrapper from '@/components/ScreenWrapper'
 import { colors } from '@/constants/theme'
+import { isIos26OrHigher } from '@/lib/utils'
 import { GlassView } from 'expo-glass-effect'
 import { useLocalSearchParams } from 'expo-router'
 import React, { useRef, useState } from 'react'
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, ViewStyle } from 'react-native'
 
 const EmailVerification = () => {
   const { email } = useLocalSearchParams<{ email: string }>();
@@ -36,9 +38,9 @@ const EmailVerification = () => {
       <View style={styles.container}>
         <View style={{ marginTop: 40, gap: 10 }}>
           <Text style={{ color: colors.white, fontSize: 24, fontWeight: 'bold', alignSelf: 'flex-start' }}>Verify your email!</Text>
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={{ color: colors.moonlightGray, fontSize: 15, alignSelf: 'flex-start' }}>5-digit OTP has been sent to </Text>
-            <Text style={{ color: colors.stardustWhite, fontSize: 15, fontWeight: 'bold' }}>{email}</Text>
+          <View >
+            <Text style={{ color: colors.uranianBlue, fontSize: 15, alignSelf: 'flex-start', fontWeight: 'medium' }}>5-digit OTP has been sent to </Text>
+            <Text style={{ color: colors.uranianBlue, fontSize: 15, fontWeight: '700' }}>{email}</Text>
           </View>
         </View>
       </View>
@@ -50,23 +52,31 @@ const EmailVerification = () => {
         {/* Form Container */}
         <View style={styles.formContainer}>
           <View style={styles.otpContainer}>
-            {code.map((digit, index) => (
-              <GlassView key={index} glassEffectStyle='clear' style={styles.glassInput}>
-                <TextInput
-                  ref={(ref) => { inputs.current[index] = ref }}
-                  style={styles.otpInput}
-                  keyboardType="number-pad"
-                  maxLength={1}
-                  onChangeText={(text) => handleInputChange(text, index)}
-                  onKeyPress={({ nativeEvent }) => {
-                    if (nativeEvent.key === 'Backspace' && !code[index]) {
-                      handleBackspace(index);
-                    }
-                  }}
-                  value={digit}
-                />
-              </GlassView>
-            ))}
+            {code.map((digit, index) => {
+              const glassInputFallbackStyle: ViewStyle = !isIos26OrHigher ? {
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderWidth: 1,
+                borderColor: 'rgba(255, 255, 255, 0.3)',
+              } : {};
+
+              return (
+                <GlassView key={index} glassEffectStyle='clear' style={[styles.glassInput, glassInputFallbackStyle]}>
+                  <TextInput
+                    ref={(ref) => { inputs.current[index] = ref }}
+                    style={styles.otpInput}
+                    keyboardType="number-pad"
+                    maxLength={1}
+                    onChangeText={(text) => handleInputChange(text, index)}
+                    onKeyPress={({ nativeEvent }) => {
+                      if (nativeEvent.key === 'Backspace' && !code[index]) {
+                        handleBackspace(index);
+                      }
+                    }}
+                    value={digit}
+                  />
+                </GlassView>
+              )
+            })}
           </View>
           <View style={styles.resendContainer}>
             <Text style={styles.resendText}>Didn&apos;t get code? </Text>
@@ -81,11 +91,9 @@ const EmailVerification = () => {
           <TouchableOpacity
             onPress={() => Keyboard.dismiss()}
           >
-            <GlassView glassEffectStyle='clear' style={styles.glassButton}>
-              <Text style={{ color: colors.white, fontWeight: "semibold", textAlign: "center", fontSize: 16 }}>
-                Verify
-              </Text>
-            </GlassView>
+            <Button textStyle={{ fontWeight: "600" }}>
+              Confirm
+            </Button>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -100,7 +108,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     paddingHorizontal: 15,
-    gap: 10
+    gap: 10,
   },
   formContainer: {
     flex: 1,
