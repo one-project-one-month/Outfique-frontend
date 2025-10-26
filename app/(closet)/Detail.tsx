@@ -208,12 +208,13 @@ interface DataType {
     colors: string[];
     sizes: string[];
     brand: string[];
-    price: string[];
+    price: number;
 }
 
-const Detail: React.FC<DataType> = () => {
+const Detail: React.FC = () => {
     const router = useRouter();
     const { height } = useWindowDimensions();
+
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [titleName, setTitleName] = useState<string>('');
 
@@ -224,37 +225,35 @@ const Detail: React.FC<DataType> = () => {
         colors: ["Black", "White"],
         sizes: [],
         brand: [],
-        price: [],
+        price: 0,
     });
 
-    const handleUpdateData = (title: keyof DataType, items: string[]) => {
+    const handleUpdateData = (title: keyof DataType, items: string[] | number) => {
         setData(prevData => ({
             ...prevData,
             [title]: items
         }));
     };
 
-
-    const handleAddPress = (addText: any, title: string) => {
-        console.log(addText);
+    const handleAddPress = (addText: string, title: string) => {
         setTitleName(title);
         setModalVisible(true);
     };
 
-    const renderItem = (title: string, item: string, addText = null) => {
+    const renderItem = (title: string, item: string, addText: string | null = null) => {
         if (item === "ADD_BUTTON") {
             return (
                 <GlassButton
                     size="small"
-                    glassProps={{
-                        glassEffectStyle: 'clear'
-                    }}
+                    glassProps={{ glassEffectStyle: 'clear' }}
                     buttonStyle={{
-                        borderRadius: 10, flexDirection: "row",
+                        borderRadius: 10,
+                        flexDirection: "row",
                         alignItems: "center",
                         paddingHorizontal: 10
                     }}
-                    onPress={() => handleAddPress(addText, title)}>
+                    onPress={() => handleAddPress(addText || '', title)}
+                >
                     <AntDesign name="plus" size={17} color={colors.white} />
                     {addText && <Text style={{ color: colors.uranianBlue, marginLeft: 3 }}>{addText}</Text>}
                 </GlassButton>
@@ -267,7 +266,7 @@ const Detail: React.FC<DataType> = () => {
         );
     };
 
-    const renderSection = (title: string, data: any, addText: any) => {
+    const renderSection = (title: string, data: string[], addText: string | null) => {
         const flatData = [...data, "ADD_BUTTON"];
         return (
             <View style={{ marginBottom: 15 }}>
@@ -286,15 +285,27 @@ const Detail: React.FC<DataType> = () => {
 
     return (
         <ScreenWrapper>
+
+            {/* Modal */}
+            <ModalSlide
+                DATA={DATA}
+                onAddNewItem={handleUpdateData}
+                titleName={titleName}
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+            />
+            {/* Back Button */}
             <TouchableOpacity
                 style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }}
-                onPress={() => router.push("/(closet)/ImageBg")}>
+                onPress={() => router.push("/(closet)/ImageBg")}
+            >
                 <BackButton />
                 <Text style={{ fontSize: 18, color: colors.white, marginLeft: 4 }}>Back</Text>
             </TouchableOpacity>
+
             <View style={{ flex: 1 }}>
-                {/* rm bg photo show */}
-                <View style={{ alignItems: "center", }}>
+                {/* Background Image */}
+                <View style={{ alignItems: "center" }}>
                     <Image
                         source={require("../../assets/bgrm.png")}
                         style={{
@@ -305,7 +316,7 @@ const Detail: React.FC<DataType> = () => {
                     />
                 </View>
 
-                {/* Glass Card  */}
+                {/* Glass Card */}
                 <GlassCard
                     size="large"
                     glassProps={{ glassEffectStyle: 'clear' }}
@@ -326,7 +337,7 @@ const Detail: React.FC<DataType> = () => {
                         contentContainerStyle={{ paddingBottom: 20 }}
                         style={{ width: '100%' }}
                     >
-                        <View style={{ alignItems: "center", padding: 10, }}>
+                        <View style={{ alignItems: "center", padding: 10 }}>
                             <Text style={{ color: colors.white, fontSize: 16 }}>Review Item</Text>
                         </View>
 
@@ -336,7 +347,30 @@ const Detail: React.FC<DataType> = () => {
                                 {renderSection("Categories", DATA.categories, null)}
                                 {renderSection("Fashion Styles", DATA.styles, null)}
                                 {renderSection("Weather Conditions", DATA.weather, null)}
-                                {renderSection("Price(MMK)", DATA.price, "Add Price")}
+
+                                {/* Price Section */}
+                                <View style={{ marginBottom: 15 }}>
+                                    <Text style={styles.title}>Price(MMK)</Text>
+                                    <GlassButton
+                                        size="small"
+                                        glassProps={{ glassEffectStyle: 'clear' }}
+                                        buttonStyle={{
+                                            borderRadius: 10,
+                                            flexDirection: "row",
+                                            alignItems: "center",
+                                            paddingHorizontal: 10,
+                                        }}
+                                        onPress={() => handleAddPress("Add Price", "Price(MMK)")}
+                                    >
+                                        <AntDesign name="plus" size={17} color={colors.white} />
+                                        <Text style={{ color: colors.uranianBlue, marginLeft: 3 }}> {DATA.price && DATA.price > 0 ? "Edit Price" : "Add Price"}</Text>
+                                    </GlassButton>
+                                    {DATA.price > 0 && (
+                                        <View style={{ marginTop: 5, backgroundColor: colors.uranianBlue, borderRadius: 10, padding: 10 }}>
+                                            <Text style={{ fontSize: 15 }}>{DATA.price} MMK</Text>
+                                        </View>
+                                    )}
+                                </View>
                             </View>
 
                             {/* Right Column */}
@@ -347,7 +381,7 @@ const Detail: React.FC<DataType> = () => {
                             </View>
                         </View>
 
-                        {/* Save Btn */}
+                        {/* Save Button */}
                         <TouchableOpacity
                             style={{
                                 backgroundColor: colors.white,
@@ -357,21 +391,20 @@ const Detail: React.FC<DataType> = () => {
                                 borderRadius: 24,
                             }}
                             activeOpacity={0.8}
-                            onPress={() => router.push('/(closet)/Collection')}>
-                            <Text
-                                style={{
-                                    fontWeight: "bold",
-                                    color: colors.midnightNavy,
-                                    textAlign: "center",
-                                    fontSize: 16,
-                                }}>
+                            onPress={() => router.push('/(closet)/Collection')}
+                        >
+                            <Text style={{
+                                fontWeight: "bold",
+                                color: colors.midnightNavy,
+                                textAlign: "center",
+                                fontSize: 16,
+                            }}>
                                 Save
                             </Text>
                         </TouchableOpacity>
                     </ScrollView>
                 </GlassCard>
             </View>
-            <ModalSlide DATA={DATA} onAddNewItem={handleUpdateData} titleName={titleName} modalVisible={modalVisible} setModalVisible={setModalVisible} />
         </ScreenWrapper>
     );
 };
