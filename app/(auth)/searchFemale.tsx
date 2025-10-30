@@ -240,15 +240,19 @@ const SearchFemale = () => {
                   />
                 </View>
               )}
-              renderAboveThumbComponent={(index: number, value: number) => (
-                <View style={styles.thumbLabelContainer}>
-                  <Text style={styles.thumbLabelText}>
-                    {index === 1 && value === displayMaxLimit
-                      ? `> ${value}`
-                      : value}
-                  </Text>
-                </View>
-              )}
+              renderBelowThumbComponent={(index: number, value: number) => {
+                const offset = index === 0 ? { left: -16 } : { right: 20 };
+
+                return (
+                  <View style={[styles.thumbLabelContainer, offset]}>
+                    <Text style={styles.thumbLabelText}>
+                      {index === 1 && value === displayMaxLimit
+                        ? `> ${value}`
+                        : value}
+                    </Text>
+                  </View>
+                );
+              }}
             />
           </View>
 
@@ -550,13 +554,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   thumbLabelContainer: {
-    position: "absolute",
-    top: 40,
+    position: 'relative', 
     alignSelf: "center",
   },
   thumbLabelText: {
     color: colors.uranianBlue,
     fontSize: 12,
     fontWeight: "bold",
+    paddingHorizontal: 2, 
   },
 });

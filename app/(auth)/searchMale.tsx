@@ -215,47 +215,51 @@ const SearchMale = () => {
               </TouchableOpacity>
             </View>
             {/* Slider Component */}
-            <Slider
-              value={[displayMinPrice, displayMaxPrice]}
-              onValueChange={onRangeChange}
-              onSlidingComplete={onRangeChange}
-              minimumValue={displayMinPossible}
-              maximumValue={displayMaxLimit}
-              step={
-                currency === "MMK"
-                  ? SLIDER_STEP
-                  : Math.round(SLIDER_STEP * MMK_TO_BAHT)
-              }
-              containerStyle={styles.sliderContainer}
-              minimumTrackTintColor={colors.uranianBlue}
-              maximumTrackTintColor={colors.white + "30"}
-              trackStyle={styles.sliderTrack}
-              renderThumbComponent={() => (
-                <View style={{ position: "relative" }}>
-                  <StarFourIcon
-                    size={24}
-                    color="black"
-                    weight="bold"
-                    style={{ position: "absolute", left: 0, top: 0 }}
-                  />
-                  <StarFourIcon
-                    size={24}
-                    color={colors.uranianBlue}
-                    weight="fill"
-                  />
-                </View>
-              )}
-              renderBelowThumbComponent={(index: number, value: number) => (
-                <View style={styles.thumbLabelContainer}>
-                  <Text style={styles.thumbLabelText}>
-                    {index === 1 && value === displayMaxLimit
-                      ? `> ${value}`
-                      : value}
-                  </Text>
-                </View>
-              )}
-            />
-          </View>
+                        <Slider
+                          value={[displayMinPrice, displayMaxPrice]}
+                          onValueChange={onRangeChange}
+                          onSlidingComplete={onRangeChange}
+                          minimumValue={displayMinPossible}
+                          maximumValue={displayMaxLimit}
+                          step={
+                            currency === "MMK"
+                              ? SLIDER_STEP
+                              : Math.round(SLIDER_STEP * MMK_TO_BAHT)
+                          }
+                          containerStyle={styles.sliderContainer}
+                          minimumTrackTintColor={colors.uranianBlue}
+                          maximumTrackTintColor={colors.white + "30"}
+                          trackStyle={styles.sliderTrack}
+                          renderThumbComponent={() => (
+                            <View style={{ position: "relative" }}>
+                              <StarFourIcon
+                                size={24}
+                                color="black"
+                                weight="bold"
+                                style={{ position: "absolute", left: 0, top: 0 }}
+                              />
+                              <StarFourIcon
+                                size={24}
+                                color={colors.uranianBlue}
+                                weight="fill"
+                              />
+                            </View>
+                          )}
+                          renderBelowThumbComponent={(index: number, value: number) => {
+                            const offset = index === 0 ? { left: -16 } : { right: 20 };
+            
+                            return (
+                              <View style={[styles.thumbLabelContainer, offset]}>
+                                <Text style={styles.thumbLabelText}>
+                                  {index === 1 && value === displayMaxLimit
+                                    ? `> ${value}`
+                                    : value}
+                                </Text>
+                              </View>
+                            );
+                          }}
+                        />
+                      </View>
 
           {/* 3. COLORS SECTION */}
           <View>
@@ -554,12 +558,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   thumbLabelContainer: {
-    position: "absolute",
+    position: 'relative', 
     alignSelf: "center",
   },
   thumbLabelText: {
     color: colors.uranianBlue,
     fontSize: 12,
     fontWeight: "bold",
+    paddingHorizontal: 2, 
   },
 });
