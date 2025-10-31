@@ -1,8 +1,6 @@
 import BackButton from "@/components/BackButton";
-import GlassButton from "@/components/GlassButton";
-import { colors } from "@/constants/theme";
-import { router, Stack } from "expo-router";
-import { SlidersHorizontalIcon } from "phosphor-react-native";
+import FilterButton from "@/components/outfit-experience/FilterButton";
+import { Stack } from "expo-router";
 import React from "react";
 
 export default function DashboardLayout() {
@@ -30,18 +28,9 @@ export default function DashboardLayout() {
             fontSize: 16,
             fontWeight: "semibold",
           },
+          headerTransparent: true,
           headerLeft: () => <BackButton />,
-          headerRight: () => (
-            <GlassButton
-              size="icon"
-              buttonStyle={{ marginRight: 10 }}
-              onPress={() =>
-                router.push("/(outfit-experience)/generated-outfits")
-              }
-            >
-              <SlidersHorizontalIcon size={24} color={colors.uranianBlue} />
-            </GlassButton>
-          ),
+          headerRight: () => <FilterButton />,
         }}
       />
     </Stack>

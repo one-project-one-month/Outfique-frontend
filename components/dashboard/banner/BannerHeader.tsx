@@ -5,7 +5,7 @@ import { ArrowRightIcon } from "phosphor-react-native";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-const BannerHeader = ({ title }: { title: string }) => {
+const BannerHeader = ({ title, to }: { title: string; to: string }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
@@ -14,7 +14,7 @@ const BannerHeader = ({ title }: { title: string }) => {
         <GlassButton
           buttonStyle={{ width: 30, height: 30 }}
           size="icon"
-          onPress={() => router.push("/outfit-recommendations")}
+          onPress={() => router.push(to && (to as any))}
         >
           <ArrowRightIcon size={20} color={colors.uranianBlue} />
         </GlassButton>
