@@ -104,13 +104,13 @@ const styles = StyleSheet.create({
     lineHeight: 30,
   },
   genderContainer: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    paddingHorizontal: 20,
-    marginTop: 24,
-    gap: 12,
-    flex: 1,
+    flex:1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 18,
+        paddingLeft: 3,
+        paddingRight: 3
   },
   genderCard: {
     width: "45%",
