@@ -6,6 +6,7 @@ import { colors } from "@/constants/theme";
 import { getFashionStylesByGender } from "@/lib/fashionStyles";
 import { isIos } from "@/lib/utils";
 import { useOnboardingStore } from "@/store/onboardingStore";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   ScrollView,
@@ -17,10 +18,11 @@ import {
 
 const Page9 = () => {
   const gender = useOnboardingStore((state) => state.gender);
+  const router = useRouter();
   const setFashionStyles = useOnboardingStore(
     (state) => state.setFashionStyles
   );
-  
+
   const [selectedFashionStyles, setSelectedFashionStyles] = useState<string[]>(
     []
   );
@@ -38,6 +40,7 @@ const Page9 = () => {
   const handleContinue = () => {
     setFashionStyles(selectedFashionStyles);
     console.log("Onboarding completed! All data saved to store.");
+    router.push('/(dashboard)/dashboard')
 
   };
 

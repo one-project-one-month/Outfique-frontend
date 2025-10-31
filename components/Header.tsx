@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 17
+    marginTop: 17,
+    marginBottom:17
   },
   leftIcon: {
     position: "absolute",

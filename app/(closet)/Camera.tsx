@@ -1,17 +1,17 @@
 import BackButton from "@/components/BackButton";
 import GlassCard from "@/components/GlassCard";
+import Header from "@/components/Header";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import { colors } from "@/constants/theme";
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from "expo-router";
 import LottieView from 'lottie-react-native';
 import React from "react";
-import { Alert, Image, Linking, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Camera = () => {
     const router = useRouter();
     const [image, setImage] = React.useState<string | null>(null);
-
 
     const pickImage = async () => {
         const lib = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -28,7 +28,7 @@ const Camera = () => {
         }
 
         const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ['images'],
             allowsEditing: true,
             aspect: [9, 16],
             quality: 1,
@@ -57,7 +57,7 @@ const Camera = () => {
         }
 
         const result = await ImagePicker.launchCameraAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            mediaTypes: ['images'],
             allowsEditing: true,
             quality: 1,
         });
@@ -75,13 +75,11 @@ const Camera = () => {
             {!image ? (
                 <View style={{ flex: 1 }}>
                     {/* Back Button */}
-                    <Pressable
-                        onPress={() => router.push('/(closet)/Home')}
-                        style={styles.backButton}
-                    >
-                        <BackButton />
-                        <Text style={styles.backText}>Back</Text>
-                    </Pressable>
+                    <Header title="Back" leftIcon={<BackButton />} style={{
+                        justifyContent: 'flex-start',
+                        paddingLeft: 70,
+                        gap: 8
+                    }} />
 
                     {/* Top Text */}
                     <Text style={styles.title}>Capture your outfit</Text>
@@ -93,8 +91,7 @@ const Camera = () => {
                                 <GlassCard
                                     size="small"
                                     glassProps={{ glassEffectStyle: 'clear' }}
-                                    cardStyle={{ borderRadius: 10 }}
-                                >
+                                    cardStyle={{ borderRadius: 10 }}>
                                     <Image
                                         source={require('../../assets/image.png')}
                                         resizeMode="stretch"
@@ -153,7 +150,6 @@ const styles = StyleSheet.create({
     backButton: {
         flexDirection: 'row',
         alignItems: 'center',
-
     },
     backText: {
         fontSize: 20,

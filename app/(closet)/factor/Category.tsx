@@ -21,7 +21,6 @@ interface CategoryProps {
 
 const Category: React.FC<CategoryProps> = ({ setActiveCategory, activeCategory }) => {
 
-
     return (
         <ScrollView
             horizontal

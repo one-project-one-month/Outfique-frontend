@@ -5,7 +5,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Modal from "react-native-modal";
 import AddType from './factor/AddType';
 
-// ---------- Types ----------
 interface DataType {
     categories: string[];
     styles: string[];
@@ -24,7 +23,7 @@ interface ModalSlideProps {
     DATA: DataType;
 }
 
-// ---------- Component ----------
+
 const ModalSlide: React.FC<ModalSlideProps> = ({
     titleName,
     modalVisible,
@@ -34,13 +33,13 @@ const ModalSlide: React.FC<ModalSlideProps> = ({
 }) => {
     const { height } = useWindowDimensions();
 
-    // ---------- Local State ----------
+
     const [selectedCategories, setSelectedCategories] = useState<string[]>(DATA.categories);
     const [selectedColors, setSelectedColors] = useState<string[]>(DATA.colors);
     const [selectedFashion, setSelectedFashion] = useState<string[]>(DATA.styles);
     const [selectedSizes, setSelectedSizes] = useState<string[]>(DATA.sizes);
 
-    // ---------- Render ----------
+
     return (
         <Modal
             isVisible={modalVisible}
@@ -91,7 +90,7 @@ const ModalSlide: React.FC<ModalSlideProps> = ({
 
 export default ModalSlide;
 
-// ---------- Styles ----------
+
 const styles = StyleSheet.create({
     modal: {
         justifyContent: "flex-end",

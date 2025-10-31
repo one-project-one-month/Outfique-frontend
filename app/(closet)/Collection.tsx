@@ -1,12 +1,13 @@
 import BackButton from "@/components/BackButton";
 import GlassButton from "@/components/GlassButton";
 import GlassInput from "@/components/GlassInput";
+import Header from "@/components/Header";
+import ScreenWrapper from "@/components/ScreenWrapper";
 import { colors } from "@/constants/theme";
 import Feather from "@expo/vector-icons/Feather";
 import { useRouter } from "expo-router";
 import React from 'react';
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Tabs from '../(tabs)/index';
+import { FlatList, Image, StyleSheet, View } from "react-native";
 import Category from "./factor/Category";
 
 
@@ -40,12 +41,13 @@ const Collection = () => {
             : mockItems.filter((item) => item.category === activeCategory);
 
     return (
-        <Tabs>
+        <ScreenWrapper>
             {/* Back Button */}
-            <TouchableOpacity onPress={() => router.push('/(closet)/Detail')} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                <BackButton />
-                <Text style={{ fontSize: 20, color: 'white' }}>Digital Closet</Text>
-            </TouchableOpacity>
+            <Header title="Digital Closet" leftIcon={<BackButton />} style={{
+                justifyContent: 'flex-start',
+                paddingLeft: 70,
+                gap: 8
+            }} />
 
             <View style={styles.container}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, width: '100%' }}>
@@ -64,6 +66,7 @@ const Collection = () => {
                     {/* Filter button */}
                     <GlassButton
                         size="small"
+                        onPress={() => router.push('/(closet)/Filter')}
                         glassProps={{
                             glassEffectStyle: 'clear'
                         }}
@@ -78,8 +81,7 @@ const Collection = () => {
                     <Category setActiveCategory={setActiveCategory} activeCategory={activeCategory} />
                 </View>
 
-                <View style={{ marginBottom: 70 }}>
-                    {/* Image Grid */}
+                <View style={{ flex: 1 }}>
                     <FlatList
                         data={filteredItems}
                         keyExtractor={(item) => item.id.toString()}
@@ -102,7 +104,7 @@ const Collection = () => {
                     />
                 </View>
             </View>
-        </Tabs>
+        </ScreenWrapper >
     );
 };
 export default Collection;

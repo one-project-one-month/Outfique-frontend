@@ -1,6 +1,7 @@
 import BackButton from "@/components/BackButton";
 import GlassButton from "@/components/GlassButton";
 import GlassCard from "@/components/GlassCard";
+import Header from "@/components/Header";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import { colors } from "@/constants/theme";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -103,13 +104,11 @@ const Detail: React.FC = () => {
                 setModalVisible={setModalVisible}
             />
             {/* Back Button */}
-            <TouchableOpacity
-                style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }}
-                onPress={() => router.push("/(closet)/ImageBg")}
-            >
-                <BackButton />
-                <Text style={{ fontSize: 18, color: colors.white, marginLeft: 4 }}>Back</Text>
-            </TouchableOpacity>
+            <Header title="Back" leftIcon={<BackButton />} style={{
+                justifyContent: 'flex-start',
+                paddingLeft: 70,
+                gap: 8
+            }} />
 
             <View style={{ flex: 1 }}>
                 {/* Background Image */}

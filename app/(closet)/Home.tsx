@@ -1,14 +1,15 @@
 import BackButton from '@/components/BackButton';
 import GlassButton from '@/components/GlassButton';
 import GlassInput from '@/components/GlassInput';
+import Header from '@/components/Header';
+import ScreenWrapper from '@/components/ScreenWrapper';
 import { colors } from '@/constants/theme';
+import { Feather } from '@expo/vector-icons';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import Feather from '@expo/vector-icons/Feather';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import Tooltip from 'react-native-walkthrough-tooltip';
-import Tabs from '../(tabs)';
 import Category from './factor/Category';
 
 const Home = () => {
@@ -16,12 +17,12 @@ const Home = () => {
     const [activeCategory, setActiveCategory] = React.useState("All");
     const router = useRouter();
     return (
-        <Tabs>
-            {/* Back Button */}
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                <BackButton />
-                <Text style={{ fontSize: 20, color: 'white' }}>Digital Closet</Text>
-            </View>
+        <ScreenWrapper>
+            <Header title="Digital Closet" leftIcon={<BackButton />} style={{
+                justifyContent: 'flex-start',
+                paddingLeft: 80,
+                gap: 8
+            }} />
 
             <View style={styles.container}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, width: '100%' }}>
@@ -62,7 +63,7 @@ const Home = () => {
                 </View>
 
                 {/* Add Button with Tooltip */}
-                <View style={{ alignItems: 'center' }}>
+                <View style={{ alignItems: 'center', marginBottom: '30%' }}>
                     <Tooltip
                         isVisible={active}
                         contentStyle={styles.tooltipContent}
@@ -79,20 +80,19 @@ const Home = () => {
                                 setActive(true);
                                 setTimeout(() => {
                                     setActive(false);
+                                    console.log('false');
                                     router.push('/Camera');
                                 }, 500);
                             }}
                             onLongPress={() => setActive(true)}
                             delayLongPress={150}
-                            style={[styles.addButton, { backgroundColor: active ? colors.uranianBlue : colors.midnightNavy }]}
-                        >
+                            style={[styles.addButton, { backgroundColor: active ? colors.uranianBlue : colors.midnightNavy }]}>
                             <AntDesign name="plus" size={30} color={active ? colors.midnightNavy : colors.uranianBlue} />
                         </Pressable>
                     </Tooltip>
                 </View>
             </View>
-        </Tabs >
-
+        </ScreenWrapper>
     );
 };
 
@@ -114,10 +114,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         width: 80,
         height: 80,
-        shadowColor: 'white',
-        shadowOpacity: 0.6,
-        shadowOffset: { width: 0, height: 1 },
-        shadowRadius: 4,
+        boxShadow: '0 2px 10px rgba(255, 255, 255, 0.6)',
         elevation: 6,
 
     },

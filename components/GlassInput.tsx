@@ -118,40 +118,6 @@ const GlassInput: React.FC<GlassInputProps> = ({
     );
   };
 
-  const renderLeftIcon = () => {
-    if (!leftIcon) return null;
-    return (
-      <View style={{
-        position: 'absolute',
-        left: 16,
-        top: '50%',
-        transform: [{ translateY: -10 }],
-        zIndex: 1,
-      }}
-      > {leftIcon}
-      </View>);
-  };
-
-  if (leftIcon) {
-    return (
-      <View>
-        {renderLeftIcon()}
-        <TextInput
-          style={[
-            combinedInputStyle,
-            combinedTextStyle,
-            glassProps?.glassEffectStyle === 'regular' && {
-              backgroundColor: 'rgba(10, 18, 42, 0.8)',
-              borderWidth: 0,
-            }
-          ] as any}
-          placeholderTextColor="rgba(255, 255, 255, 0.6)"
-          secureTextEntry={shouldSecureText}
-          {...textInputProps}
-        />
-      </View>
-    );
-  }
 
   if (isIos26OrHigher) {
     if (isPassword && showPasswordToggle) {
@@ -211,6 +177,7 @@ const GlassInput: React.FC<GlassInputProps> = ({
       </View>
     );
   }
+
   if (isSearch) {
     return (
       <View style={{ position: "relative", flex: 1 }}>
@@ -244,7 +211,37 @@ const GlassInput: React.FC<GlassInputProps> = ({
     );
   }
 
-  return (
+  return leftIcon ? (
+    <View style={{ position: 'relative' }}>
+      <View
+        style={{
+          position: 'absolute',
+          left: 16,
+          top: '50%',
+          transform: [{ translateY: -10 }],
+          zIndex: 1,
+        }}
+      >
+        {leftIcon}
+      </View>
+
+      <TextInput
+        style={
+          [
+            combinedInputStyle,
+            combinedTextStyle,
+            glassProps?.glassEffectStyle === "regular" && {
+              backgroundColor: "rgba(10, 18, 42, 0.8)",
+              borderWidth: 0,
+            },
+          ] as any
+        }
+        placeholderTextColor="rgba(255, 255, 255, 0.6)"
+        secureTextEntry={shouldSecureText}
+        {...textInputProps}
+      />
+    </View>
+  ) : (
     <TextInput
       style={
         [

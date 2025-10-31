@@ -1,10 +1,11 @@
 import BackButton from "@/components/BackButton";
 import GlassButton from "@/components/GlassButton";
+import Header from "@/components/Header";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import { colors } from "@/constants/theme";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 
 const ImageBg = () => {
@@ -13,25 +14,46 @@ const ImageBg = () => {
 
     return (
         <ScreenWrapper>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10, justifyContent: 'space-between' }}>
-                <Pressable
-                    onPress={() => router.push('/(closet)/Home')}
-                    style={styles.backButton}>
-                    <BackButton />
-                    <Text style={styles.backText}>Back</Text>
-                </Pressable>
+            <View
+                style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginRight: 10,
+                }}
+            >
+                <View >
+                    <Header
+                        title="Back"
+                        leftIcon={<BackButton />}
+                        style={{
+                            justifyContent: 'flex-start',
+                            gap: 8,
+                            paddingLeft: 70,
+                        }}
+                    />
+                </View>
+
                 <GlassButton
                     size="small"
-                    glassProps={{
-                        glassEffectStyle: 'clear'
-                    }}
-                    onPress={() => setBg(bg === colors.moonlightGray ? colors.midnightNavy : colors.moonlightGray)}
-                    buttonStyle={{ borderRadius: 10, marginLeft: 10 }}>
-                    <Text style={{ color: colors.white }}>Background {bg === colors.moonlightGray ? 'Black' : 'White'} Color</Text>
+                    glassProps={{ glassEffectStyle: 'clear' }}
+                    onPress={() =>
+                        setBg(
+                            bg === colors.moonlightGray
+                                ? colors.midnightNavy
+                                : colors.moonlightGray
+                        )
+                    }
+                    buttonStyle={{ borderRadius: 10, marginLeft: 10 }}
+                >
+                    <Text style={{ color: colors.white }}>
+                        Background {bg === colors.moonlightGray ? 'Black' : 'White'} Color
+                    </Text>
                 </GlassButton>
             </View>
+
             <View style={[styles.imageBg, { backgroundColor: bg, borderColor: bg }]}>
-                <Image source={require('../../assets/bgrm.png')} style={{ width: '90%', height: '90%', resizeMode: 'contain' }} />
+                <Image source={require('../../assets/bgrm.png')} style={{ width: '90%', height: '90%' }} resizeMode='contain' />
             </View>
 
             <View style={styles.buttonRow}>
