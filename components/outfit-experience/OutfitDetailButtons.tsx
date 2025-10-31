@@ -1,11 +1,14 @@
+import { colors } from "@/constants/theme";
 import { Link } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import GlassButton from "../GlassButton";
+import ShareModal from "../ShareModal";
 import FavButton from "./FavButton";
 import ShareButton from "./ShareButton";
 
 const OutfitDetailButtons = () => {
+  const [showShareModal, setShowShareModal] = useState(false);
   return (
     <View style={styles.container}>
       <GlassButton size="medium" buttonStyle={{ width: "65%" }}>
@@ -15,7 +18,7 @@ const OutfitDetailButtons = () => {
             params: { id: "1" },
           }}
           style={{
-            color: "white",
+            color: colors.uranianBlue,
             fontSize: 18,
             fontWeight: "600",
           }}
@@ -23,7 +26,11 @@ const OutfitDetailButtons = () => {
           View user details
         </Link>
       </GlassButton>
-      <ShareButton />
+      <ShareButton onPress={() => setShowShareModal(true)} />
+      <ShareModal
+        visible={showShareModal}
+        onClose={() => setShowShareModal(false)}
+      />
       <View>
         <FavButton />
       </View>

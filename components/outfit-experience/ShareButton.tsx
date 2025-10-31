@@ -1,12 +1,11 @@
 import { colors } from "@/constants/theme";
-import { router } from "expo-router";
 import { ShareFatIcon } from "phosphor-react-native";
 import React from "react";
 import GlassButton from "../GlassButton";
 
-const ShareButton = () => {
+const ShareButton = ({ onPress }: { onPress: () => void }) => {
   return (
-    <GlassButton size="icon" onPress={() => router.push("/login")}>
+    <GlassButton size="icon" onPress={onPress}>
       <ShareFatIcon size={24} color={colors.uranianBlue} />
     </GlassButton>
   );

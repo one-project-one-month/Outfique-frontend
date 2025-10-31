@@ -6,7 +6,7 @@ import GlassButton from "../GlassButton";
 
 const HomeButton = () => {
   return (
-    <GlassButton size="icon" onPress={() => router.push("/login")}>
+    <GlassButton size="icon" onPress={() => router.push("/dashboard")}>
       <HouseIcon size={24} color={colors.uranianBlue} />
     </GlassButton>
   );

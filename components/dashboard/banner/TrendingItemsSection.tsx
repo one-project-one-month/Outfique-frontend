@@ -15,7 +15,7 @@ const defaultDataWith6Colors = [
 function TrendingItemsSection() {
   return (
     <View id="carousel-banner">
-      <BannerHeader title="Trending Items" />
+      <BannerHeader title="Trending Items" to="/trendingItems" />
       <FlatList
         data={defaultDataWith6Colors}
         horizontal
