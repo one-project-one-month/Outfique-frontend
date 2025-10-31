@@ -35,7 +35,7 @@ const Page6 = () => {
     <ScreenWrapper>
       <View style={styles.topBar}>
         {isIos && <BackButton />}
-        <StarSlider initialPosition={0.5} />
+        <StarSlider initialPosition={0.6} />
       </View>
 
       <View style={styles.contentContainer}>
@@ -55,7 +55,7 @@ const Page6 = () => {
               key={bodyType.id}
               title={bodyType.name}
               description={bodyType.description}
-              icon={<Text style={styles.bodyTypeIcon}>{bodyType.icon}</Text>}
+              imageSource={bodyType.imageSource}
               selected={selectedBodyType === bodyType.id}
               onPress={() => setSelectedBodyType(bodyType.id)}
             />

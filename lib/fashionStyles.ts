@@ -7,8 +7,8 @@ export type FashionStyle = {
 
 export const FEMALE_FASHION_STYLES: FashionStyle[] = [
   {
-    id: "classic-preppy-f",
-    name: "Classic / Preppy",
+    id: "classic-f",
+    name: "Classic",
     description: "Polo shirts, chinos, loafers, neat tailoring",
     gender: "female",
   },

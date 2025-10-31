@@ -8,7 +8,7 @@ export type Accessory = {
   id: string;
   name: string;
   description: string;
-  icon: string; // Emoji or icon identifier
+  imageSource: any; // For require() images
 };
 
 /**
@@ -20,49 +20,49 @@ export const ACCESSORIES: Accessory[] = [
     id: "headwear",
     name: "Head wears",
     description: "Hats, caps, beanies, crowns",
-    icon: "🧢",
+    imageSource: require("@/assets/hat_blue.png"),
   },
   {
     id: "eyewear",
     name: "Eye wears",
     description: "Sunglasses, eyeglasses",
-    icon: "🕶️",
+    imageSource: require("@/assets/eyewear_blue.png"),
   },
   {
     id: "jewelry",
     name: "Jewelry",
-    description: "Necklaces, rings, bracelets",
-    icon: "💍",
+    description: "Studs, hoops, ear cuffs",
+    imageSource: require("@/assets/earring_blue.png"),
   },
   {
-    id: "watches",
-    name: "Watches",
-    description: "Wristwatches, smartwatches",
-    icon: "⌚",
+    id: "necklace",
+    name: "Necklaces",
+    description: "Pendants, chains, chokers",
+    imageSource: require("@/assets/necklace_blue.png"), 
   },
   {
-    id: "bags",
+    id: "handwear",
+    name: "Handwears",
+    description: "Gloves, mittens, arm covers",
+    imageSource: require("@/assets/handwear_blue.png"),
+  },
+  {
+    id: "bracelet",
+    name: "Bracelets/ Rings",
+    description: "Bangles, cuffs, watches",
+    imageSource: require("@/assets/ring_blue.png"), 
+  },
+  {
+    id: "bag",
     name: "Bags",
     description: "Handbags, backpacks, clutches",
-    icon: "👜",
+    imageSource: require("@/assets/bag_blue.png"),
   },
   {
-    id: "scarves",
-    name: "Scarves",
-    description: "Scarves, shawls, wraps",
-    icon: "🧣",
-  },
-  {
-    id: "belts",
+    id: "belt",
     name: "Belts",
     description: "Leather belts, fabric belts",
-    icon: "👔",
-  },
-  {
-    id: "footwear",
-    name: "Footwear",
-    description: "Shoes, boots, sneakers",
-    icon: "👟",
+    imageSource: require("@/assets/belt_blue.png"),
   },
 ];
 

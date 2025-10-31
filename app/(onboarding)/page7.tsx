@@ -38,7 +38,7 @@ const Page7 = () => {
     <ScreenWrapper>
       <View style={styles.topBar}>
         {isIos && <BackButton />}
-        <StarSlider initialPosition={0.8} />
+        <StarSlider initialPosition={0.7} />
       </View>
 
       <View style={styles.contentContainer}>
@@ -58,7 +58,7 @@ const Page7 = () => {
             <AccessoryCard
               title={item.name}
               description={item.description}
-              icon={<Text style={styles.icon}>{item.icon}</Text>}
+              imageSource={item.imageSource}
               selected={selectedAccessories.includes(item.id)}
               onPress={() => toggleAccessory(item.id)}
             />
@@ -120,14 +120,11 @@ const styles = StyleSheet.create({
     fontWeight: "400",
   },
   listContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     paddingBottom: 100,
   },
   columnWrapper: {
     justifyContent: "space-between",
-  },
-  icon: {
-    fontSize: 56,
   },
   footerButton: {
     width: "100%",

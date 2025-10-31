@@ -6,7 +6,7 @@ import { isIos } from "@/lib/utils";
 import { useOnboardingStore } from "@/store/onboardingStore";
 import { useRouter } from "expo-router";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Page5 = () => {
   const router = useRouter();
@@ -19,7 +19,7 @@ const Page5 = () => {
     <ScreenWrapper>
       <View style={styles.topBar}>
         {isIos && <BackButton />}
-        <StarSlider initialPosition={0.4} />
+        <StarSlider initialPosition={0.5} />
       </View>
 
       <View style={styles.textContainer}>
@@ -36,7 +36,11 @@ const Page5 = () => {
           onPress={() => setGender("male")}
         >
           <View style={styles.iconBox}>
-            <Text style={styles.icon}>👨</Text>
+            <Image
+              source={require("@/assets/male_blue.png")}
+              style={styles.genderIcon}
+              resizeMode="contain"
+            />
           </View>
           <Text style={styles.genderLabel}>Male</Text>
         </TouchableOpacity>
@@ -50,7 +54,11 @@ const Page5 = () => {
           onPress={() => setGender("female")}
         >
           <View style={styles.iconBox}>
-            <Text style={styles.icon}>👩</Text>
+            <Image
+              source={require("@/assets/female_blue.png")}
+              style={styles.genderIcon}
+              resizeMode="contain"
+            />
           </View>
           <Text style={styles.genderLabel}>Female</Text>
         </TouchableOpacity>
@@ -127,19 +135,22 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 12,
-    backgroundColor: "rgba(255,255,255,0.02)",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 12,
+    marginBottom: 10,
   },
   icon: {
     fontSize: 48,
     color: "white",
   },
+  genderIcon: {
+    width: 60,
+    height: 60,
+  },
   genderLabel: {
     color: "white",
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "700",
   },
   footerButton: {
     width: "100%",

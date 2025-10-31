@@ -1,11 +1,11 @@
 import { colors } from "@/constants/theme";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 type AccessoryCardProps = {
   title: string;
   description: string;
-  icon: React.ReactNode;
+  imageSource: any; // For require() images
   selected?: boolean;
   onPress?: () => void;
 };
@@ -13,7 +13,7 @@ type AccessoryCardProps = {
 const AccessoryCard = ({
   title,
   description,
-  icon,
+  imageSource,
   selected = false,
   onPress,
 }: AccessoryCardProps) => {
@@ -24,8 +24,14 @@ const AccessoryCard = ({
       onPress={onPress}
     >
       <View style={styles.content}>
-        {/* Icon at the top */}
-        <View style={styles.iconContainer}>{icon}</View>
+    
+        <View style={styles.iconContainer}>
+          <Image
+            source={imageSource}
+            style={styles.image}
+            resizeMode="contain"
+          />
+        </View>
 
         {/* Text content at the bottom */}
         <View style={styles.textContainer}>
@@ -69,9 +75,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
+  image: {
+    width: 70,
+    height: 60,
+  },
   textContainer: {
     width: "100%",
-    gap: 2,
+    gap: 4,
     alignItems: "flex-start",
   },
   title: {

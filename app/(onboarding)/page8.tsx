@@ -40,7 +40,7 @@ const Page8 = () => {
     <ScreenWrapper>
       <View style={styles.topBar}>
         {isIos && <BackButton />}
-        <StarSlider initialPosition={0.9} />
+        <StarSlider initialPosition={0.8} />
       </View>
 
       <View style={styles.contentContainer}>

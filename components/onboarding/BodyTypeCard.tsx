@@ -1,11 +1,11 @@
 import { colors } from "@/constants/theme";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 type BodyTypeCardProps = {
   title: string;
   description: string;
-  icon: React.ReactNode;
+  imageSource: any; // For require() images
   selected?: boolean;
   onPress?: () => void;
 };
@@ -13,7 +13,7 @@ type BodyTypeCardProps = {
 const BodyTypeCard = ({
   title,
   description,
-  icon,
+  imageSource,
   selected = false,
   onPress,
 }: BodyTypeCardProps) => {
@@ -24,8 +24,12 @@ const BodyTypeCard = ({
       onPress={onPress}
     >
       <View style={styles.content}>
-        {/* Icon on the left */}
-        <View style={styles.iconContainer}>{icon}</View>
+        {/* Image on the left */}
+        <Image
+          source={imageSource}
+          style={styles.iconContainer}
+          resizeMode="contain"
+        />
 
         {/* Text content on the right */}
         <View style={styles.textContainer}>
@@ -46,7 +50,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.08)",
-    padding: 16,
+    padding: 8,
     marginBottom: 12,
   },
   cardSelected: {
@@ -67,7 +71,6 @@ const styles = StyleSheet.create({
     height: 80,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.04)",
     borderRadius: 12,
   },
   textContainer: {
@@ -76,13 +79,14 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "white",
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "700",
     letterSpacing: 0.3,
+    lineHeight: 24,
   },
   description: {
-    color: "rgba(255, 255, 255, 0.65)",
-    fontSize: 14,
+    color: colors.uranianBlue,
+    fontSize: 12,
     fontWeight: "400",
     lineHeight: 20,
   },
